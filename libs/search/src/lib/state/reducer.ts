@@ -10,6 +10,7 @@ export interface SearchState {
   params: {
     filters: SearchFilters
     sortBy?: string
+    resultsLayout?: string
     size?: number
   }
   results: {
@@ -51,6 +52,15 @@ export function reducer(
         params: {
           ...state.params,
           sortBy: action.sortBy,
+        },
+      }
+    }
+    case fromActions.UPDATE_RESULTS_LAYOUT: {
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          resultsLayout: action.resultsLayout,
         },
       }
     }

@@ -11,5 +11,6 @@
 	"popularity": "popularity",
 	"dropFile": "drop file",
 	"Back": "Back",
-	"facets.block.title.tag": "Keywords"
+  "facets.block.title.tag": "Keywords",
+  "results.layout.selectOne": "Results layout"
 }
