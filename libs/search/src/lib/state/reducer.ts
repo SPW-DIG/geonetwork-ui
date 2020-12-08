@@ -1,4 +1,4 @@
-import { RecordSummary, SearchFilters } from '@lib/common'
+import { RecordSummary, ResultsListLayout, SearchFilters } from '@lib/common'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
@@ -10,7 +10,7 @@ export interface SearchState {
   params: {
     filters: SearchFilters
     sortBy?: string
-    resultsLayout?: string
+    resultsLayout?: ResultsListLayout
     size?: number
   }
   results: {

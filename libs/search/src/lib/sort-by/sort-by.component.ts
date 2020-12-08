@@ -17,10 +17,12 @@ export class SortByComponent implements OnInit {
     {
       label: 'last changed',
       value: 'dateStamp',
+      icon: 'update',
     },
     {
       label: 'popularity',
       value: 'popularity',
+      icon: 'stars',
     },
   ]
   currentSortBy$ = this.store.pipe(select(getSearchSortBy))

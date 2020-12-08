@@ -1,7 +1,15 @@
-<ui-dropdown-selector
-  [title]="'results.layout.selectOne' | translate"
-  [ariaName]="'results.layout.selectOne' | translate"
-  [choices]="choices"
-  (selectValue)="change($event)"
-  [selected]="currentLayout$ | async"
-></ui-dropdown-selector>
+<mat-form-field class="w-16">
+  <mat-select
+    title="{{ 'results.layout.selectOne' | translate }}"
+    aria-label="{{ 'results.layout.selectOne' | translate }}"
+    (selectionChange)="change($event)"
+  >
+    <mat-select-trigger *ngIf="currentLayout">
+      <mat-icon>{{ currentLayout.icon }}</mat-icon>
+    </mat-select-trigger>
+    <mat-option *ngFor="let l of choices | keyvalue" [value]="l.value.id">
+      <mat-icon>{{ l.value.icon }}</mat-icon>
+      {{ l.value.label }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

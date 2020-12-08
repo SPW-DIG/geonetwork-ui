@@ -12,6 +12,10 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -29,6 +33,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
+    // NoopAnimationsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {

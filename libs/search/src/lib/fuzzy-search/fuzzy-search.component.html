@@ -1,5 +1,12 @@
-<ui-text-input
+<!--<ui-text-input
   #searchText
   [hint]="'Find your metadata' | translate"
   [value]="currentTextSearch$ | async"
-></ui-text-input>
+></ui-text-input>-->
+<mat-form-field>
+  <input matInput
+         placeholder="Search"
+         #searchText
+         [value]="currentTextSearch$ | async">
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>

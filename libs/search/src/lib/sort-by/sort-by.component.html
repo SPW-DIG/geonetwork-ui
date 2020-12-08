@@ -1,7 +1,22 @@
-<ui-dropdown-selector
+<!--<ui-dropdown-selector
   [title]="'Sort by' | translate"
   [choices]="choices"
   (selectValue)="changeSortBy($event)"
   [selected]="currentSortBy$ | async"
   ariaName="search-sort-by"
-></ui-dropdown-selector>
+></ui-dropdown-selector>-->
+<mat-form-field class="w-16">
+  <mat-select
+    title="{{ 'results.sortBy.selectOne' | translate }}"
+    aria-label="{{ 'results.sortBy.selectOne' | translate }}"
+    (selectionChange)="changeSortBy($event)"
+  >
+    <mat-select-trigger>
+      <mat-icon>sort</mat-icon>
+    </mat-select-trigger>
+    <mat-option *ngFor="let l of choices" [value]="l">
+      <mat-icon>{{ l.icon }}</mat-icon>
+      {{ l.label }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

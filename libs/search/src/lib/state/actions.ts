@@ -1,4 +1,4 @@
-import { RecordSummary, SearchFilters } from '@lib/common'
+import { RecordSummary, ResultsListLayout, SearchFilters } from '@lib/common'
 import { Action } from '@ngrx/store'
 
 export const UPDATE_FILTERS = '[Search] Update Filters'
@@ -25,7 +25,7 @@ export class SortBy implements Action {
 export class UpdateResultsLayout implements Action {
   readonly type = UPDATE_RESULTS_LAYOUT
 
-  constructor(public resultsLayout: string) {}
+  constructor(public resultsLayout: ResultsListLayout) {}
 }
 
 export class AddResults implements Action {
