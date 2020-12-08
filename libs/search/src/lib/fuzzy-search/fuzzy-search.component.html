@@ -4,9 +4,11 @@
   [value]="currentTextSearch$ | async"
 ></ui-text-input>-->
 <mat-form-field>
-  <input matInput
-         placeholder="Search"
-         #searchText
-         [value]="currentTextSearch$ | async">
+  <input
+    matInput
+    placeholder="Search"
+    #searchText
+    [value]="currentTextSearch$ | async"
+  />
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>

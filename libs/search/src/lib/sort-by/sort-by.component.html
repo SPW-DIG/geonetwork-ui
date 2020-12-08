@@ -7,7 +7,7 @@
     (selectionChange)="changeSortBy($event)"
   >
     <mat-select-trigger *ngIf="currentSortBy">
-      <mat-icon>{{currentSortBy.icon}}</mat-icon>
+      <mat-icon>{{ currentSortBy.icon }}</mat-icon>
     </mat-select-trigger>
     <mat-option *ngFor="let l of choices" [value]="l">
       <mat-icon>{{ l.icon }}</mat-icon>
