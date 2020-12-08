@@ -20,6 +20,11 @@ import { TextInputComponent } from './text-input/text-input.component'
 import { RecordPreviewComponent } from './record-preview/record-preview.component'
 import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
 import { StepBarComponent } from './step-bar/step-bar.component'
+import {
+  MatProgressSpinner,
+  MatProgressSpinnerModule,
+  MatSpinner,
+} from '@angular/material/progress-spinner'
 
 @NgModule({
   declarations: [
@@ -46,6 +51,7 @@ import { StepBarComponent } from './step-bar/step-bar.component'
     TranslateModule.forChild(),
     NgxDropzoneModule,
     FacetsModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     DropdownSelectorComponent,

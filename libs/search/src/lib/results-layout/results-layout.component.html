@@ -1,4 +1,4 @@
-<mat-form-field class="w-16">
+<mat-form-field class="w-16" *ngIf="choices.size > 1">
   <mat-select
     title="{{ 'results.layout.selectOne' | translate }}"
     aria-label="{{ 'results.layout.selectOne' | translate }}"

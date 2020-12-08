@@ -8,8 +8,8 @@
       <ui-record-preview-list [record]="record"></ui-record-preview-list>
     </div>
   </div>
-  <div *ngSwitchCase="layoutEnum.TITLE" class="gap-4 p-4">
-    <div class="pb-4" *ngFor="let record of records">
+  <div *ngSwitchCase="layoutEnum.TITLE" class="gap-4 p-4 w-screen">
+    <div *ngFor="let record of records">
       <ui-record-preview-title [record]="record"></ui-record-preview-title>
     </div>
   </div>
@@ -33,4 +33,7 @@
   </div>
 </ng-template>
 
-<div *ngIf="loading" class="p-4"><span translate>search.loading</span>...</div>
+<div *ngIf="loading" class="p-4"
+      [title]="'search.loading' | translate">
+  <mat-spinner></mat-spinner>
+</div>

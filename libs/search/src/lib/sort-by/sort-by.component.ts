@@ -4,6 +4,7 @@ import { SortBy } from '../state/actions'
 import { SearchState } from '../state/reducer'
 import { getSearchSortBy } from '../state/selectors'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { ResultsListLayout } from '@lib/common'
 
 marker('last changed')
 marker('popularity')
@@ -25,17 +26,19 @@ export class SortByComponent implements OnInit {
       icon: 'stars',
     },
   ]
+  currentSortBy
   currentSortBy$ = this.store.pipe(select(getSearchSortBy))
 
   constructor(private store: Store<SearchState>) {}
 
   ngOnInit(): void {}
 
-  changeSortBy(criteria: any) {
-    if (typeof criteria === 'string') {
-      this.store.dispatch(new SortBy(criteria))
+  changeSortBy(field: any) {
+    this.currentSortBy = field.value
+    if (field.value.value) {
+      this.store.dispatch(new SortBy(field.value.value))
     } else {
-      throw new Error(`Unexpected value received: ${criteria}`)
+      throw new Error(`Unexpected value received: ${field}`)
     }
   }
 }
