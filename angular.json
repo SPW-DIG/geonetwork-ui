@@ -314,6 +314,20 @@
         }
       }
     },
+    "lib-data": {
+      "projectType": "library",
+      "root": "libs/data",
+      "sourceRoot": "libs/data/src",
+      "prefix": "search",
+      "architect": {
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "detectOpenHandles": true
+          }
+        }
+      }
+    },
     "lib-ui": {
       "projectType": "library",
       "root": "libs/ui",

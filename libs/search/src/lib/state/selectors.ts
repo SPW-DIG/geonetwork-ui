@@ -15,6 +15,11 @@ export const getSearchSortBy = createSelector(
   (state: SearchState) => state.params.sortBy
 )
 
+export const getCurrentRecord = createSelector(
+  getSearchState,
+  (state: SearchState) => state.results.current
+)
+
 export const getSearchResultsLayout = createSelector(
   getSearchState,
   (state: SearchState) => state.params.resultsLayout

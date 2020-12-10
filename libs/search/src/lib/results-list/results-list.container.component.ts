@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { BootstrapService, ResultsListLayout } from '@lib/common'
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core'
+import { BootstrapService, RecordSummary, ResultsListLayout } from '@lib/common'
 import { select, Store } from '@ngrx/store'
 import { SearchState } from '../state/reducer'
 import {
+  getCurrentRecord,
   getSearchResults,
   getSearchResultsLayout,
   getSearchResultsLoading,
@@ -10,9 +11,11 @@ import {
 import {
   RequestMoreResults,
   SetConfigAggregations,
+  SetCurrent,
   UpdateFilters,
 } from '../state/actions'
 import { map, pluck, take, tap } from 'rxjs/operators'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'search-results-list-container',
@@ -25,6 +28,8 @@ export class ResultsListContainerComponent implements OnInit {
   results$ = this.store.pipe(select(getSearchResults))
   layout$ = this.store.pipe(select(getSearchResultsLayout))
   isLoading$ = this.store.pipe(select(getSearchResultsLoading))
+
+  subs = new Subscription()
 
   constructor(
     private bootstrap: BootstrapService,
@@ -47,5 +52,9 @@ export class ResultsListContainerComponent implements OnInit {
         })
       )
       .subscribe()
+  }
+
+  setCurrent(record: RecordSummary) {
+    this.store.dispatch(new SetCurrent(record))
   }
 }

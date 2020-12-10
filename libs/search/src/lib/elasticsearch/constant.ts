@@ -7,20 +7,17 @@ export enum ElasticsearchMetadataModels {
 export const ES_SOURCE_SUMMARY = [
   'uuid',
   'id',
-  'title',
   'resource*',
-  'resourceTitleObject',
-  'resourceAbstractObject',
   'overview',
   'logo',
+  'geom',
+  'link',
+  'format',
+  'allKeywords',
   'codelist_status_text',
 ]
 
-export const ES_SOURCE_BRIEF = [
-  ...ES_SOURCE_SUMMARY,
-  'resourceTypeObject',
-  'Org',
-]
+export const ES_SOURCE_BRIEF = [...ES_SOURCE_SUMMARY, 'Org']
 
 export const ElasticSearchSources = {
   [ElasticsearchMetadataModels.SUMMARY]: ES_SOURCE_SUMMARY,

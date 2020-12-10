@@ -16,6 +16,7 @@ export class RecordPreviewComponent implements OnInit {
   get isViewable() {
     return this.record.viewable
   }
+
   get isDownloadable() {
     return this.record.downloadable
   }

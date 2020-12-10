@@ -28,6 +28,9 @@
       "@lib/ui": [
         "libs/ui/src/index.ts"
       ],
+      "@lib/data": [
+        "libs/data/src/index.ts"
+      ],
       "@lib/gn-api": [
         "libs/gn-api/src/index.ts"
       ],

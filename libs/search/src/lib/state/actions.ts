@@ -2,6 +2,7 @@ import { RecordSummary, ResultsListLayout, SearchFilters } from '@lib/common'
 import { Action } from '@ngrx/store'
 
 export const UPDATE_FILTERS = '[Search] Update Filters'
+export const SET_CURRENT = '[Search] Set current record'
 export const SORT_BY = '[Search] Sort By'
 export const UPDATE_RESULTS_LAYOUT = '[Search] Update results layout'
 export const ADD_RESULTS = '[Search] Add Results'
@@ -20,6 +21,12 @@ export class SortBy implements Action {
   readonly type = SORT_BY
 
   constructor(public sortBy: string) {}
+}
+
+export class SetCurrent implements Action {
+  readonly type = SET_CURRENT
+
+  constructor(public record: RecordSummary) {}
 }
 
 export class UpdateResultsLayout implements Action {
@@ -60,6 +67,7 @@ export class SetConfigAggregations implements Action {
 
 export type SearchActions =
   | UpdateFilters
+  | SetCurrent
   | SortBy
   | UpdateResultsLayout
   | AddResults

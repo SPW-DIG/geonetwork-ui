@@ -1,3 +1,5 @@
+import { Feature } from 'geojson'
+
 export interface SearchFilters {
   any?: string
 }
@@ -13,6 +15,10 @@ export interface RecordSummary {
   downloadable?: boolean
   viewable?: boolean
   updateFrequency?: string
+  geom: Feature
+  format: Array<string>
+  allThesaurus: object
+  link: Array<any>
 }
 
 export interface RecordBrief extends RecordSummary {
@@ -32,4 +38,4 @@ export enum ResultsListLayout {
   TITLE = 'TITLE',
 }
 
-export const RESULTS_PAGE_SIZE = 10
+export const RESULTS_PAGE_SIZE = 12

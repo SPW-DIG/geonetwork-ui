@@ -2,4 +2,5 @@
   [loading]="isLoading$ | async"
   [records]="results$ | async"
   [layout]="layout$ | async"
+  (currentRecordEvent)="setCurrent($event)"
 ></ui-results-list>

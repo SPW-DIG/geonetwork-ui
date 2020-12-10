@@ -20,6 +20,10 @@ export class ElasticsearchMapper {
       viewable: (hit as any).view,
       logoUrl: `/geonetwork${hit._source.logo}`,
       updateFrequency: this.getFirstValue(hit._source.codelist_status_text),
+      geom: hit._source.geom,
+      allThesaurus: hit._source.allThesaurus,
+      format: hit._source.format,
+      link: hit._source.link,
     }))
   }
 

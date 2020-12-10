@@ -14,6 +14,7 @@ export interface SearchState {
     size?: number
   }
   results: {
+    current: RecordSummary
     records: RecordSummary[]
     aggregations: any
   }
@@ -26,6 +27,7 @@ export const initialState: SearchState = {
     filters: {},
   },
   results: {
+    current: null,
     records: [],
     aggregations: {},
   },
@@ -52,6 +54,15 @@ export function reducer(
         params: {
           ...state.params,
           sortBy: action.sortBy,
+        },
+      }
+    }
+    case fromActions.SET_CURRENT: {
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          current: action.record,
         },
       }
     }
