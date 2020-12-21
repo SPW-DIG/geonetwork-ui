@@ -9,12 +9,22 @@ import {
 import { RecordSummary, ResultsListLayout } from '@lib/common'
 import { Subject } from 'rxjs'
 import { distinctUntilChanged } from 'rxjs/operators'
+import { animate, style, transition, trigger } from '@angular/animations'
 
 @Component({
   selector: 'ui-results-list',
   templateUrl: './results-list.component.html',
   styleUrls: ['./results-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate('100ms', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class ResultsListComponent implements OnInit {
   @Input() records: RecordSummary[]

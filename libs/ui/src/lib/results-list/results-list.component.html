@@ -4,7 +4,9 @@
     [ngTemplateOutlet]="block"
   ></ng-container>
   <div *ngSwitchCase="layoutEnum.LIST" class="gap-4 p-4">
-    <div class="pb-4" *ngFor="let record of records">
+    <div class="pb-4"
+         *ngFor="let record of records"
+         [@inOutAnimation]>
       <ui-record-preview-list
         [record]="record"
         (click)="setCurrent(record)"
@@ -13,7 +15,8 @@
     </div>
   </div>
   <div *ngSwitchCase="layoutEnum.TITLE" class="gap-4 p-4 w-screen">
-    <div *ngFor="let record of records">
+    <div *ngFor="let record of records"
+         [@inOutAnimation]>
       <ui-record-preview-title
         [record]="record"
         (click)="setCurrent(record)"
@@ -25,6 +28,7 @@
     <ui-record-preview-text
       style="height: 24rem;"
       *ngFor="let record of records"
+      [@inOutAnimation]
       [record]="record"
       (click)="setCurrent(record)"
       (mouseover)="setHover(record)"
@@ -37,6 +41,7 @@
   <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
     <ui-record-preview-card
       *ngFor="let record of records"
+      [@inOutAnimation]
       [record]="record"
       linkTarget="_blank"
       (click)="setCurrent(record)"

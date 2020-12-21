@@ -14,10 +14,7 @@ import { ResultsListContainerComponent } from './results-list/results-list.conta
 import { SortByComponent } from './sort-by/sort-by.component'
 import { SearchEffects } from './state/effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
-import {
-  MatFormFieldControl,
-  MatFormFieldModule,
-} from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
