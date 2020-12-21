@@ -25,7 +25,7 @@ import { MatPaginator } from '@angular/material/paginator'
 import { MatSort } from '@angular/material/sort'
 import { MatTableDataSource } from '@angular/material/table'
 import { select, Store } from '@ngrx/store'
-import { getCurrentRecord, SearchState } from '@lib/search'
+import { getCurrentRecord, getHoverRecord, SearchState } from '@lib/search'
 
 const DEFAULT_PRIMARY_COLOR = '#9a9a9a'
 
@@ -50,7 +50,7 @@ export class DataMapComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator
   @ViewChild(MatSort) sort: MatSort
 
-  record$ = this.store.pipe(select(getCurrentRecord))
+  record$ = this.store.pipe(select(getHoverRecord))
 
   @Input() record: RecordSummary
   @Input() showProperties = false
@@ -150,6 +150,10 @@ export class DataMapComponent implements OnInit, AfterViewInit {
       this.map.removeLayer(this.vectorLayer)
       this.table.data.data.length = 0
       this.table.size = 0
+    }
+
+    if (!this.linksList) {
+      return
     }
 
     this.linksList.forEach((link) => {

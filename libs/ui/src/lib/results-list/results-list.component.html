@@ -7,7 +7,8 @@
     <div class="pb-4" *ngFor="let record of records">
       <ui-record-preview-list
         [record]="record"
-        (mouseover)="setCurrent(record)"
+        (click)="setCurrent(record)"
+        (mouseover)="setHover(record)"
       ></ui-record-preview-list>
     </div>
   </div>
@@ -15,7 +16,8 @@
     <div *ngFor="let record of records">
       <ui-record-preview-title
         [record]="record"
-        (mouseover)="setCurrent(record)"
+        (click)="setCurrent(record)"
+        (mouseover)="setHover(record)"
       ></ui-record-preview-title>
     </div>
   </div>
@@ -24,7 +26,8 @@
       style="height: 24rem;"
       *ngFor="let record of records"
       [record]="record"
-      (mouseover)="setCurrent(record)"
+      (click)="setCurrent(record)"
+      (mouseover)="setHover(record)"
     ></ui-record-preview-text>
   </div>
   <ng-container *ngSwitchDefault [ngTemplateOutlet]="block"></ng-container>
@@ -36,7 +39,8 @@
       *ngFor="let record of records"
       [record]="record"
       linkTarget="_blank"
-      (mouseover)="setCurrent(record)"
+      (click)="setCurrent(record)"
+      (mouseover)="setHover(record)"
     ></ui-record-preview-card>
   </div>
 </ng-template>

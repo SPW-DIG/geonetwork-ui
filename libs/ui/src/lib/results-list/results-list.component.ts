@@ -22,6 +22,7 @@ export class ResultsListComponent implements OnInit {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
 
   @Output() currentRecordEvent = new EventEmitter<RecordSummary>()
+  @Output() hoverRecordEvent = new EventEmitter<RecordSummary>()
 
   layoutEnum = ResultsListLayout
 
@@ -31,5 +32,9 @@ export class ResultsListComponent implements OnInit {
 
   setCurrent(record: RecordSummary) {
     this.currentRecordEvent.emit(record)
+  }
+
+  setHover(record: RecordSummary) {
+    this.hoverRecordEvent.emit(record)
   }
 }

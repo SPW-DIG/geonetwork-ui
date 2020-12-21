@@ -17,6 +17,7 @@ import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
 } from '@angular/platform-browser/animations'
+import { MatIconModule } from '@angular/material/icon'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -37,6 +38,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     EffectsModule.forRoot(),
     // NoopAnimationsModule,
     BrowserAnimationsModule,
+    MatIconModule,
   ],
   providers: [
     {
