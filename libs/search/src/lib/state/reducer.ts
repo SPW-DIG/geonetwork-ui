@@ -1,23 +1,27 @@
 import { RecordSummary, ResultsListLayout, SearchFilters } from '@lib/common'
+import { SET_SEARCH } from './actions'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 
+export interface SearchStateParams {
+  filters?: SearchFilters
+  sortBy?: string
+  size?: number
+}
+
 export interface SearchState {
   config: {
-    aggregations?: any
+    aggs?: any
   }
-  params: {
-    filters: SearchFilters
-    sortBy?: string
-    resultsLayout?: ResultsListLayout
-    size?: number
-  }
+  params: SearchStateParams
   results: {
     current: RecordSummary
+    hover: RecordSummary
     records: RecordSummary[]
     aggregations: any
   }
+  resultsLayout?: string
   loadingMore: boolean
 }
 
@@ -25,9 +29,11 @@ export const initialState: SearchState = {
   config: {},
   params: {
     filters: {},
+    size: 10,
   },
   results: {
     current: null,
+    hover: null,
     records: [],
     aggregations: {},
   },
@@ -48,7 +54,15 @@ export function reducer(
         },
       }
     }
-    case fromActions.SORT_BY: {
+    case fromActions.SET_SEARCH: {
+      return {
+        ...state,
+        params: {
+          ...action.payload,
+        },
+      }
+    }
+    case fromActions.SET_SORT_BY: {
       return {
         ...state,
         params: {
@@ -66,13 +80,19 @@ export function reducer(
         },
       }
     }
-    case fromActions.UPDATE_RESULTS_LAYOUT: {
+    case fromActions.SET_HOVER: {
       return {
         ...state,
-        params: {
-          ...state.params,
-          resultsLayout: action.resultsLayout,
+        results: {
+          ...state.results,
+          hover: action.record,
         },
+      }
+    }
+    case fromActions.SET_RESULTS_LAYOUT: {
+      return {
+        ...state,
+        resultsLayout: action.resultsLayout,
       }
     }
     case fromActions.ADD_RESULTS: {
@@ -114,7 +134,7 @@ export function reducer(
         ...state,
         config: {
           ...state.config,
-          aggregations: action.payload,
+          aggs: action.payload,
         },
       }
     }

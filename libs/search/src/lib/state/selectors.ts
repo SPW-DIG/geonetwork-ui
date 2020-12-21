@@ -20,14 +20,19 @@ export const getCurrentRecord = createSelector(
   (state: SearchState) => state.results.current
 )
 
+export const getHoverRecord = createSelector(
+  getSearchState,
+  (state: SearchState) => state.results.hover
+)
+
 export const getSearchResultsLayout = createSelector(
   getSearchState,
-  (state: SearchState) => state.params.resultsLayout
+  (state: SearchState) => state.resultsLayout
 )
 
 export const getSearchConfigAggregations = createSelector(
   getSearchState,
-  (state: SearchState) => state.config.aggregations
+  (state: SearchState) => state.config.aggs
 )
 
 export const getSearchResults = createSelector(

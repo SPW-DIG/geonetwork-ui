@@ -1,10 +1,13 @@
 import { RecordSummary, ResultsListLayout, SearchFilters } from '@lib/common'
 import { Action } from '@ngrx/store'
+import { SearchStateParams } from './reducer'
 
 export const UPDATE_FILTERS = '[Search] Update Filters'
 export const SET_CURRENT = '[Search] Set current record'
-export const SORT_BY = '[Search] Sort By'
-export const UPDATE_RESULTS_LAYOUT = '[Search] Update results layout'
+export const SET_HOVER = '[Search] Set hover record'
+export const SET_SEARCH = '[Search] Set overall search configuration'
+export const SET_SORT_BY = '[Search] Sort By'
+export const SET_RESULTS_LAYOUT = '[Search] Set results layout'
 export const ADD_RESULTS = '[Search] Add Results'
 export const CLEAR_RESULTS = '[Search] Clear Results'
 export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
@@ -17,8 +20,14 @@ export class UpdateFilters implements Action {
   constructor(public payload: SearchFilters) {}
 }
 
-export class SortBy implements Action {
-  readonly type = SORT_BY
+export class SetSearch implements Action {
+  readonly type = SET_SEARCH
+
+  constructor(public payload: SearchStateParams) {}
+}
+
+export class SetSortBy implements Action {
+  readonly type = SET_SORT_BY
 
   constructor(public sortBy: string) {}
 }
@@ -29,10 +38,16 @@ export class SetCurrent implements Action {
   constructor(public record: RecordSummary) {}
 }
 
-export class UpdateResultsLayout implements Action {
-  readonly type = UPDATE_RESULTS_LAYOUT
+export class SetHover implements Action {
+  readonly type = SET_HOVER
 
-  constructor(public resultsLayout: ResultsListLayout) {}
+  constructor(public record: RecordSummary) {}
+}
+
+export class SetResultsLayout implements Action {
+  readonly type = SET_RESULTS_LAYOUT
+
+  constructor(public resultsLayout: string) {}
 }
 
 export class AddResults implements Action {
@@ -68,8 +83,10 @@ export class SetConfigAggregations implements Action {
 export type SearchActions =
   | UpdateFilters
   | SetCurrent
-  | SortBy
-  | UpdateResultsLayout
+  | SetHover
+  | SetSearch
+  | SetSortBy
+  | SetResultsLayout
   | AddResults
   | ClearResults
   | RequestMoreResults

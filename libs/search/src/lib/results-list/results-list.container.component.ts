@@ -12,6 +12,8 @@ import {
   RequestMoreResults,
   SetConfigAggregations,
   SetCurrent,
+  SetHover,
+  SetResultsLayout,
   UpdateFilters,
 } from '../state/actions'
 import { map, pluck, take, tap } from 'rxjs/operators'
@@ -20,7 +22,6 @@ import { Subscription } from 'rxjs'
 @Component({
   selector: 'search-results-list-container',
   templateUrl: './results-list.container.component.html',
-  styleUrls: ['./results-list.container.component.css'],
 })
 export class ResultsListContainerComponent implements OnInit {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
@@ -38,7 +39,6 @@ export class ResultsListContainerComponent implements OnInit {
 
   ngOnInit(): void {
     // initial load when showing the component
-
     this.bootstrap
       .uiConfReady('srv')
       .pipe(
@@ -47,6 +47,7 @@ export class ResultsListContainerComponent implements OnInit {
         // TODO: make the config work not just for tag
         pluck('tag'),
         tap((tagConfig) => {
+          this.store.dispatch(new SetResultsLayout(this.layout))
           this.store.dispatch(new SetConfigAggregations({ tag: tagConfig }))
           this.store.dispatch(new RequestMoreResults())
         })
@@ -56,5 +57,8 @@ export class ResultsListContainerComponent implements OnInit {
 
   setCurrent(record: RecordSummary) {
     this.store.dispatch(new SetCurrent(record))
+  }
+  setHover(record: RecordSummary) {
+    this.store.dispatch(new SetHover(record))
   }
 }

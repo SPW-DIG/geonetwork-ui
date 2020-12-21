@@ -3,4 +3,5 @@
   [records]="results$ | async"
   [layout]="layout$ | async"
   (currentRecordEvent)="setCurrent($event)"
+  (hoverRecordEvent)="setHover($event)"
 ></ui-results-list>
