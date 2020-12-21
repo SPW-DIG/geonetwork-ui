@@ -4,9 +4,7 @@
     [ngTemplateOutlet]="block"
   ></ng-container>
   <div *ngSwitchCase="layoutEnum.LIST" class="gap-4 p-4">
-    <div class="pb-4"
-         *ngFor="let record of records"
-         [@inOutAnimation]>
+    <div class="pb-4" *ngFor="let record of records" [@inOutAnimation]>
       <ui-record-preview-list
         [record]="record"
         (click)="setCurrent(record)"
@@ -15,8 +13,7 @@
     </div>
   </div>
   <div *ngSwitchCase="layoutEnum.TITLE" class="gap-4 p-4 w-screen">
-    <div *ngFor="let record of records"
-         [@inOutAnimation]>
+    <div *ngFor="let record of records" [@inOutAnimation]>
       <ui-record-preview-title
         [record]="record"
         (click)="setCurrent(record)"

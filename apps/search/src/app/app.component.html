@@ -8,15 +8,13 @@
     </div>
   </div>
   <div class="flex w-full">
-    <div class="w-1/4 h-full">
-    </div>
+    <div class="w-1/4 h-full"></div>
     <!--    <search-facets-container class="w-1/5"></search-facets-container>-->
     <search-results-list-container
       [hidden]="record$ | async"
       class="w-3/4"
     ></search-results-list-container>
   </div>
-  <data-record-view *ngIf="record$ | async"
-                    class="flex w-full">
+  <data-record-view *ngIf="record$ | async" class="flex w-full">
   </data-record-view>
 </div>
