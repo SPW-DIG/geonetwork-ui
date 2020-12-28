@@ -2,6 +2,7 @@ import { Feature } from 'geojson'
 
 export interface SearchFilters {
   any?: string
+  [x: string]: any
 }
 
 export interface RecordSummary {

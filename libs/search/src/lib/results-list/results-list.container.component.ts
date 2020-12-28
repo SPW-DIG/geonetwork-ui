@@ -1,23 +1,13 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { BootstrapService, RecordSummary, ResultsListLayout } from '@lib/common'
 import { select, Store } from '@ngrx/store'
+import { SetCurrent, SetHover, SetResultsLayout } from '../state/actions'
 import { SearchState } from '../state/reducer'
 import {
-  getCurrentRecord,
   getSearchResults,
   getSearchResultsLayout,
   getSearchResultsLoading,
 } from '../state/selectors'
-import {
-  RequestMoreResults,
-  SetConfigAggregations,
-  SetCurrent,
-  SetHover,
-  SetResultsLayout,
-  UpdateFilters,
-} from '../state/actions'
-import { map, pluck, take, tap } from 'rxjs/operators'
-import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'search-results-list-container',
@@ -30,29 +20,10 @@ export class ResultsListContainerComponent implements OnInit {
   layout$ = this.store.pipe(select(getSearchResultsLayout))
   isLoading$ = this.store.pipe(select(getSearchResultsLoading))
 
-  subs = new Subscription()
-
-  constructor(
-    private bootstrap: BootstrapService,
-    private store: Store<SearchState>
-  ) {}
+  constructor(private store: Store<SearchState>) {}
 
   ngOnInit(): void {
-    // initial load when showing the component
-    this.bootstrap
-      .uiConfReady('srv')
-      .pipe(
-        take(1),
-        map((config) => config.mods.search.facetConfig),
-        // TODO: make the config work not just for tag
-        pluck('tag'),
-        tap((tagConfig) => {
-          this.store.dispatch(new SetResultsLayout(this.layout))
-          this.store.dispatch(new SetConfigAggregations({ tag: tagConfig }))
-          this.store.dispatch(new RequestMoreResults())
-        })
-      )
-      .subscribe()
+    this.store.dispatch(new SetResultsLayout(this.layout))
   }
 
   setCurrent(record: RecordSummary) {
