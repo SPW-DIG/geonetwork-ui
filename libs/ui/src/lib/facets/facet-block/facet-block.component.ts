@@ -7,7 +7,7 @@ import { ModelBlock, ModelItem } from '../facets.model'
   styleUrls: ['./facet-block.component.css'],
 })
 export class FacetBlockComponent implements OnInit {
-  @Input() collapsed: boolean
+  @Input() expanded = true
   @Input() canFilter: boolean
   @Input() filter: string
   @Input() model: ModelBlock
@@ -23,10 +23,6 @@ export class FacetBlockComponent implements OnInit {
 
   ngOnInit(): void {
     this.title = this.model.key
-  }
-
-  toggleCollapsed() {
-    this.collapsed = !this.collapsed
   }
 
   onFilterChange(value: string) {

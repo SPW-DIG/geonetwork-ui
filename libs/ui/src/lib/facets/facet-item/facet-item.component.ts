@@ -14,15 +14,26 @@ export class FacetItemComponent implements OnInit {
   @Output() selectedChange = new EventEmitter<boolean>()
   @Output() invertedChange = new EventEmitter<boolean>()
 
+  color: string
+
+  colors = {
+    inverted: 'warn',
+    selected: 'primary',
+  }
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.color = this.selected ? this.colors.selected : ''
+  }
 
   onSelectedChange(value: boolean) {
+    this.color = value ? this.colors.selected : ''
     this.selectedChange.emit(value)
   }
 
   onInvertedChange(value: boolean) {
+    this.color = this.inverted ? this.colors.inverted : ''
     this.invertedChange.emit(value)
   }
 

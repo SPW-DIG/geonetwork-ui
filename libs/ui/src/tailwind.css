@@ -8,4 +8,8 @@
     font-family: 'dataFeeder';
     src: url(/apps/datafeeder/src/assets/fonts/dataFeeder.woff) format("woff");
   }
+
+  /*.mat-expansion-panel {*/
+  /*  @apply border-l-2 border-red-500*/
+  /*}*/
 }

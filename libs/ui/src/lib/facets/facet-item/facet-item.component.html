@@ -4,14 +4,15 @@
   <label
     class="flex-grow flex-shrink truncate cursor-pointer text-gray-900 group-hover:text-black"
   >
-    <input
-      type="checkbox"
-      class="cursor-pointer"
+    <mat-checkbox
       [ngModel]="selected"
+      [indeterminate]="inverted"
+      [color]="color"
       (ngModelChange)="onSelectedChange($event)"
-    />
-    {{ label }}
-    <span class="text-gray-600 group-hover:text-black">({{ count }})</span>
+    >
+      {{ label }}
+      <span class="text-gray-600 group-hover:text-black">({{ count }})</span>
+    </mat-checkbox>
   </label>
   <div
     *ngIf="!inverted"
