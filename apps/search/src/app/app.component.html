@@ -9,10 +9,12 @@
   </div>
   <div class="flex w-full">
     <search-facets-container class="w-1/4 h-full"></search-facets-container>
-    <search-results-list-container
+    <div class="w-3/4">
+      <search-results-hits-number></search-results-hits-number>
+      <search-results-list-container
       [hidden]="record$ | async"
-      class="w-3/4"
-    ></search-results-list-container>
+      ></search-results-list-container>
+    </div>
   </div>
   <data-record-view *ngIf="record$ | async" class="flex w-full">
   </data-record-view>

@@ -49,3 +49,8 @@ export const getSearchResultsAggregations = createSelector(
   getSearchState,
   (state: SearchState) => state.results.aggregations
 )
+
+export const getSearchResultsHits = createSelector(
+  getSearchState,
+  (state: SearchState) => state.results.hits
+)

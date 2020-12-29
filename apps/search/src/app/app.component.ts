@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { BootstrapService, ColorService } from '@lib/common'
-import { select, Store } from '@ngrx/store'
-import {
-  getCurrentRecord,
-  RequestMoreResults,
-  SearchState,
-  SetConfigAggregations,
-} from '@lib/search'
-import { map, pluck, take, tap } from 'rxjs/operators'
+import { select } from '@ngrx/store'
+import { getCurrentRecord, SearchFacade } from '@lib/search'
+import { map, take, tap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-root',
@@ -21,7 +16,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private bootstrap: BootstrapService,
-    private store: Store<SearchState>
+    private searchFacade: SearchFacade
   ) {
     ColorService.applyCssVariables('#e73f51', '#c2e9dc', '#212029', '#fdfbff')
   }
@@ -32,13 +27,9 @@ export class AppComponent implements OnInit {
       .pipe(
         take(1),
         map((config) => config.mods.search.facetConfig),
-        // TODO: make the config work not just for tag
-        pluck('tag.default'),
-        tap((tagConfig) => {
-          this.store.dispatch(
-            new SetConfigAggregations({ 'tag.default': tagConfig })
-          )
-          this.store.dispatch(new RequestMoreResults())
+        tap((aggregationsConfig) => {
+          this.searchFacade.setConfigAggregations(aggregationsConfig)
+          this.searchFacade.requestMoreResults()
         })
       )
       .subscribe()
