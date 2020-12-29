@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
 import { BootstrapService, ColorService } from '@lib/common'
-import { select } from '@ngrx/store'
-import { getCurrentRecord, SearchFacade } from '@lib/search'
-import { map, take, tap } from 'rxjs/operators'
+import { select, Store } from '@ngrx/store'
+import { getCurrentRecord, SearchFacade, SearchState } from '@lib/search'
+import { map, pluck, take, tap } from 'rxjs/operators'
+import { MatInput } from '@angular/material/input'
+import { Title } from '@angular/platform-browser'
 
 @Component({
   selector: 'app-root',
@@ -10,13 +12,15 @@ import { map, take, tap } from 'rxjs/operators'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'search'
+  title = ''
 
   record$ = this.store.pipe(select(getCurrentRecord))
 
   constructor(
     private bootstrap: BootstrapService,
-    private searchFacade: SearchFacade
+    private store: Store<SearchState>,
+    private searchFacade: SearchFacade,
+    private titleService: Title
   ) {
     ColorService.applyCssVariables('#e73f51', '#c2e9dc', '#212029', '#fdfbff')
   }
@@ -30,6 +34,16 @@ export class AppComponent implements OnInit {
         tap((aggregationsConfig) => {
           this.searchFacade.setConfigAggregations(aggregationsConfig)
           this.searchFacade.requestMoreResults()
+        })
+      )
+      .subscribe()
+
+    this.bootstrap
+      .siteInfoReady()
+      .pipe(
+        pluck('system/site/name'),
+        map((title: string) => {
+          this.titleService.setTitle(title)
         })
       )
       .subscribe()

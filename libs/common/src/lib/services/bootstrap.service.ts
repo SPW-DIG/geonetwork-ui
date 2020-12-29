@@ -15,6 +15,7 @@ import { DEFAULT_UI_CONFIG } from './constant'
 })
 export class BootstrapService {
   private uiConfigurations: Record<string, Observable<UiSettingApiModel>>
+  private siteDescription: Observable<SettingsListResponseApiModel>
 
   constructor(
     private siteApiService: SiteApiService,
@@ -25,7 +26,12 @@ export class BootstrapService {
   }
 
   siteInfoReady(): Observable<SettingsListResponseApiModel> {
-    return this.siteApiService.getSiteOrPortalDescription().pipe(shareReplay())
+    if (!this.siteDescription) {
+      this.siteDescription = this.siteApiService
+        .getSiteOrPortalDescription()
+        .pipe(shareReplay())
+    }
+    return this.siteDescription
   }
 
   settingsReady(): Observable<SettingsListResponseApiModel> {

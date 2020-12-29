@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { BootstrapService } from '@lib/common'
 import { SettingsListResponseApiModel } from '@lib/gn-api'
 import { Observable } from 'rxjs'
+import { Title } from '@angular/platform-browser'
+import { map, pluck } from 'rxjs/operators'
 
 @Component({
   selector: 'catalog-site-title',

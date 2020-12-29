@@ -1,4 +1,4 @@
-<div>
+<div [hidden]="record$ | async">
   <div class="flex w-full items-center">
     <catalog-site-title class="w-1/4 pl-4"></catalog-site-title>
     <div class="w-3/4 px-4">
@@ -16,6 +16,6 @@
       ></search-results-list-container>
     </div>
   </div>
-  <data-record-view *ngIf="record$ | async" class="flex w-full">
-  </data-record-view>
 </div>
+<data-record-view *ngIf="record$ | async" class="flex w-full">
+</data-record-view>

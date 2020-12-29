@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core'
 import { select, Store } from '@ngrx/store'
@@ -12,6 +13,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { UpdateFilters } from '../state/actions'
 import { SearchState } from '../state/reducer'
 import { getSearchFilters } from '../state/selectors'
+import { MatInput } from '@angular/material/input'
 
 @Component({
   selector: 'search-fuzzy-search',
@@ -33,6 +35,9 @@ export class FuzzySearchComponent implements OnDestroy, AfterViewInit {
   constructor(private store: Store<SearchState>) {}
 
   ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.searchText.nativeElement.focus()
+    }, 0)
     this.subs.add(
       fromEvent(this.searchText.nativeElement, 'keyup')
         .pipe(
