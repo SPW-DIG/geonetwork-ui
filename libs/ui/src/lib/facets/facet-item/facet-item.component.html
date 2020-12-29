@@ -10,7 +10,7 @@
       [color]="color"
       (ngModelChange)="onSelectedChange($event)"
     >
-      {{ label }}
+      {{ label | translate }}
       <span class="text-gray-600 group-hover:text-black">({{ count }})</span>
     </mat-checkbox>
   </label>
