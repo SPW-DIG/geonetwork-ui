@@ -19,7 +19,7 @@ import { MatSelectModule } from '@angular/material/select'
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
-import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-number.component'
+import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-n
     FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
-    ResultsHitsNumberComponent,
+    ResultsHitsContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +55,7 @@ import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-n
     FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
-    ResultsHitsNumberComponent,
+    ResultsHitsContainerComponent,
     FacetsModule,
   ],
 })

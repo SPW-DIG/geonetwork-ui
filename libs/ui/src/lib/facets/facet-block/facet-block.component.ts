@@ -1,25 +1,40 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core'
+import { AggregationsTypesEnum } from '@lib/common'
+import { fromEvent, Subscription } from 'rxjs'
+import { debounceTime } from 'rxjs/operators'
 import { ModelBlock, ModelItem } from '../facets.model'
-import { AggreationsTypesEnum } from '../../../../../search/src/lib/facets/facets.model'
 
 @Component({
   selector: 'ui-facet-block',
   templateUrl: './facet-block.component.html',
   styleUrls: ['./facet-block.component.css'],
 })
-export class FacetBlockComponent implements OnInit {
+export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() expanded = true
-  @Input() canFilter: boolean
   @Input() filter: string
   @Input() model: ModelBlock
   @Input() selectedPaths: string[][]
 
+  @ViewChild('filterInput') eltFilterInputRef: ElementRef<HTMLInputElement>
+
   @Output() filterChange = new EventEmitter<string>()
   @Output() itemSelected = new EventEmitter<string[]>()
   @Output() itemUnselected = new EventEmitter<string[]>()
+  @Output() more = new EventEmitter<void>()
 
   title: string
   hasItems: boolean
+  private subscription = new Subscription()
 
   constructor() {}
 
@@ -28,8 +43,24 @@ export class FacetBlockComponent implements OnInit {
     this.hasItems = this.countItems() > 0
   }
 
+  ngAfterViewInit(): void {
+    if (this.eltFilterInputRef) {
+      this.subscription.add(
+        fromEvent<Event>(this.eltFilterInputRef.nativeElement, 'keyup')
+          .pipe(debounceTime(300))
+          .subscribe((event: any) =>
+            this.onFilterChange((event.path[0] as HTMLInputElement).value)
+          )
+      )
+    }
+  }
+
+  get canFilter(): boolean {
+    return this.model.includeFilter
+  }
+
   countItems() {
-    return this.model.type === AggreationsTypesEnum.FILTERS
+    return this.model.type === AggregationsTypesEnum.FILTERS
       ? this.model.items.reduce((sum, current) => sum + current.count, 0)
       : this.model.items.length
   }
@@ -57,9 +88,9 @@ export class FacetBlockComponent implements OnInit {
     console.log('onListItemInvertedChange', inverted, item)
   }
 
-  onMoreClick() {
-    // TODO: ???
-    console.log('onMoreClick')
+  onMoreClick(event: Event) {
+    event.preventDefault()
+    this.more.emit()
   }
 
   getItems() {
@@ -69,13 +100,15 @@ export class FacetBlockComponent implements OnInit {
   canShowMore() {
     return this.model.more
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+  }
 }
 
 @Component({ selector: 'ui-facet-block', template: '' })
 export class FacetBlockStubComponent implements Partial<FacetBlockComponent> {
   @Input() title: string
-  @Input() canFilter: boolean
-  @Input() filter: string
   @Input() model: ModelBlock
   @Input() selectedPaths: string[][]
 

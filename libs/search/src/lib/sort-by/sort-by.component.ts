@@ -16,8 +16,12 @@ marker('popularity')
 export class SortByComponent implements OnInit {
   choices = [
     {
+      label: 'relevancy',
+      value: '_score',
+    },
+    {
       label: 'last changed',
-      value: 'dateStamp',
+      value: '-dateStamp',
       icon: 'update',
     },
     {

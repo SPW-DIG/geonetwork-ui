@@ -1,7 +1,11 @@
 import { TestBed } from '@angular/core/testing'
 import { AuthService } from '@lib/auth'
 import { SearchApiService } from '@lib/gn-api'
-import { ElasticsearchMapper } from '@lib/search'
+import {
+  ElasticsearchMapper,
+  SetIncludeOnAggregation,
+  UpdateRequestAggregationTerm,
+} from '@lib/search'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { StoreModule } from '@ngrx/store'
@@ -10,6 +14,8 @@ import { Observable, of } from 'rxjs'
 import {
   AddResults,
   ClearResults,
+  PatchResultsAggregations,
+  RequestMoreOnAggregation,
   RequestMoreResults,
   SetFilters,
   SetResultsAggregations,
@@ -19,10 +25,18 @@ import {
   UpdateFilters,
 } from './actions'
 import { SearchEffects } from './effects'
+import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 
+const initialStateMock = {
+  ...initialState,
+  config: {
+    aggregations: ES_FIXTURE_AGGS_REQUEST,
+  },
+}
+
 const searchServiceMock = {
-  search: () => of({ hits: { hits: [] }, aggregations: {} }), // TODO: use a fixture here
+  search: () => of({ hits: { hits: [] }, aggregations: { abc: {} } }), // TODO: use a fixture here
   configuration: {
     basePath: 'http://geonetwork/srv/api',
   },
@@ -44,7 +58,7 @@ describe('Effects', () => {
         EffectsModule.forRoot(),
         StoreModule.forRoot({}),
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState,
+          initialState: initialStateMock,
         }),
       ],
       providers: [
@@ -119,11 +133,49 @@ describe('Effects', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
       const expected = hot('-(bcd)-', {
         b: new AddResults([]),
-        c: new SetResultsAggregations({}),
+        c: new SetResultsAggregations({ abc: {} }),
         d: new SetResultsHits(undefined),
       })
 
       expect(effects.loadResults$).toBeObservable(expected)
+    })
+  })
+
+  describe('loadMoreOnAggregation$', () => {
+    it('dispatch UPDATE_REQUEST_AGGREGATION_TERM', () => {
+      actions$ = hot('-a-', { a: new RequestMoreOnAggregation('abc', 1) })
+      const expected = hot('-b-', {
+        b: new UpdateRequestAggregationTerm('abc', { increment: 1 }),
+      })
+
+      expect(effects.loadMoreOnAggregation$).toBeObservable(expected)
+    })
+  })
+
+  describe('setIncludeOnAggregation$', () => {
+    it('dispatch UPDATE_REQUEST_AGGREGATION_TERM', () => {
+      actions$ = hot('-a-', { a: new SetIncludeOnAggregation('abc', '*land*') })
+      const expected = hot('-b-', {
+        b: new UpdateRequestAggregationTerm('abc', { include: '*land*' }),
+      })
+
+      expect(effects.setIncludeOnAggregation$).toBeObservable(expected)
+    })
+  })
+
+  describe('upateRequestAggregationTerm$', () => {
+    it('patch aggregation results with new aggretation term definition', () => {
+      actions$ = hot('-a-', {
+        a: new UpdateRequestAggregationTerm('abc', {
+          include: '*land*',
+          increment: 1,
+        }),
+      })
+      const expected = hot('-b-', {
+        b: new PatchResultsAggregations('abc', { abc: {} }),
+      })
+
+      expect(effects.upateRequestAggregationTerm$).toBeObservable(expected)
     })
   })
 })

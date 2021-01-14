@@ -1,5 +1,4 @@
-<div class="p-4"
-     *ngIf="hasItems">
+<div class="p-4" *ngIf="hasItems">
   <mat-expansion-panel
     [expanded]="expanded"
     (opened)="expanded = true"
@@ -31,8 +30,7 @@
         type="text"
         class="w-full rounded border border-1 border-gray-300 input-filter py-1 px-2 pl-8 focus:outline-none focus:border-blue-400"
         *ngIf="canFilter"
-        [ngModel]="filter"
-        (ngModelChange)="onFilterChange($event)"
+        #filterInput
       />
       <ui-facet-item
         *ngFor="let item of getItems()"
@@ -42,7 +40,7 @@
         (selectedChange)="onItemSelectedChange($event, item)"
         (invertedChange)="onItemInvertedChange($event, item)"
       ></ui-facet-item>
-      <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick()"
+      <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick($event)"
         >more</a
       >
     </div>

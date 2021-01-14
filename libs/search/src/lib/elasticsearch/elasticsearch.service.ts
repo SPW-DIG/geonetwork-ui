@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import { SearchParams } from 'elasticsearch'
+import { SortParams } from '@lib/common'
+import { NameList, SearchParams } from 'elasticsearch'
 import { SearchState } from '../state/reducer'
 import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
 
@@ -16,33 +17,50 @@ export class ElasticsearchService {
   }
 
   buildPayload(state: SearchState): SearchParams {
-    const { size, sortBy, filters } = state.params
-    const sort = sortBy ? [sortBy] : undefined
+    const { size, sortBy } = state.params
+    const sort: SortParams = sortBy
+      ? sortBy.split(',').map((s) => {
+          if (s.startsWith('-')) {
+            return { [s.substring(1)]: 'desc' }
+          } else {
+            return s
+          }
+        })
+      : undefined
 
+    const payload = {
+      aggs: state.config.aggregations,
+      from: 0,
+      size,
+      sort: sort as NameList,
+      query: this.partialBuildQuery(state),
+    }
+    return payload
+  }
+
+  buildMoreOnAggregationPayload(state: SearchState, key: string): SearchParams {
+    const payload = {
+      aggregations: { [key]: state.config.aggregations[key] },
+      size: 0,
+      query: this.partialBuildQuery(state),
+    }
+    return payload
+  }
+
+  partialBuildQuery(state: SearchState) {
+    const filters = state.params.filters
     const { any, ...searchFilters } = filters
     const queryFilters = this.facetsToLuceneQuery(searchFilters)
     const queryAny = `(${filters.any || '*'})`
     const query =
       queryAny + (queryFilters.length > 0 ? ` AND ${queryFilters}` : '')
 
-    const payload = {
-      aggs: state.config.aggregations,
-      from: 0,
-      size,
-      sort,
-      query: {
-        bool: {
-          must: [
-            {
-              query_string: {
-                query,
-              },
-            },
-          ],
-        },
+    const partialQuery = {
+      bool: {
+        must: [{ query_string: { query } }],
       },
     }
-    return payload
+    return partialQuery
   }
 
   combineQueryGroups(queryGroups) {

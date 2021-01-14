@@ -10,10 +10,8 @@
   <div class="flex w-full">
     <search-facets-container class="w-1/4 h-full"></search-facets-container>
     <div class="w-3/4">
-      <search-results-hits-number></search-results-hits-number>
-      <search-results-list-container
-      [hidden]="record$ | async"
-      ></search-results-list-container>
+      <search-results-hits></search-results-hits>
+      <search-results-list-container></search-results-list-container>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { RecordSummary, SearchFilters } from '@lib/common'
+import { UPDATE_REQUEST_AGGREGATION_TERM } from './actions'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
@@ -161,6 +162,43 @@ export function reducer(
         config: {
           ...state.config,
           aggregations: action.payload,
+        },
+      }
+    }
+    case fromActions.UPDATE_REQUEST_AGGREGATION_TERM: {
+      const config = state.config
+      const aggregations = config.aggregations
+      const terms = aggregations[action.key].terms
+      const { increment, ...patch } = action.patch
+
+      if (increment) {
+        patch.size = terms.size + increment
+      }
+      return {
+        ...state,
+        config: {
+          ...config,
+          aggregations: {
+            ...aggregations,
+            [action.key]: {
+              terms: {
+                ...terms,
+                ...patch,
+              },
+            },
+          },
+        },
+      }
+    }
+    case fromActions.PATCH_RESULTS_AGGREGATIONS: {
+      const clone = JSON.parse(JSON.stringify(state.results.aggregations))
+      clone[action.key].buckets = action.payload[action.key].buckets
+
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          aggregations: clone,
         },
       }
     }
