@@ -1,0 +1,162 @@
+// Theme colors
+$colors: (
+  main: #182732,
+  light: #72AB85,
+  background: white,
+  foreground: #005ca3,
+  primary: #005ca3,
+  secondary: #cac901,
+  warn: #DF2A35
+);
+
+@function hexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
+:root {
+  // Declare each color variables
+  // with also an RGB color.
+  @each $name, $color in $colors {
+    --color-#{$name}: #{$color};
+    --color-#{$name}-rgb: #{hexToRGB($color)};
+  }
+}
+
+@function v($var-name) {
+  @return var(#{$var-name});
+}
+
+@function vColor($color-name) {
+  @return var(--color-#{$color-name});
+}
+
+$foreground: var(--color-primary-rgb);
+$dark-primary-text: var(--color-primary-rgb);
+$light-primary-text: var(--text-light);
+$dark-secondary-text: var(--color-secondary-rgb);
+$light-secondary-text: var(--text);
+$dark-warn-text: var(--text);
+$light-warn-text: var(--text);
+$light-disabled-text: var(--color-primary-rgb);
+$light-dividers: rgba(var(--text), 0.12);
+$light-focused: rgba(var(--text), 0.12);
+
+$paletteSteps: (
+  50
+);
+$gn-primary-palette: (
+  50: rgba(var(--color-primary-rgb), 0.1),
+  100: rgba(var(--color-primary-rgb), 0.2),
+  200: rgba(var(--color-primary-rgb), 0.3),
+  300: rgba(var(--color-primary-rgb), 0.4),
+  400: rgba(var(--color-primary-rgb), 0.5),
+  500: rgba(var(--color-primary-rgb), 0.6),
+  600: rgba(var(--color-primary-rgb), 0.7),
+  700: rgba(var(--color-primary-rgb), 0.8),
+  800: rgba(var(--color-primary-rgb), 0.9),
+  900: rgba(var(--color-primary-rgb), 1),
+  A100: var(--color-primary-rgb),
+  A200: var(--color-primary-rgb),
+  A400: var(--color-primary-rgb),
+  A700: var(--color-primary-rgb),
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+$gn-secondary-palette: (
+  50: rgba(var(--color-secondary-rgb), 0.1),
+  100: rgba(var(--color-secondary-rgb), 0.2),
+  200: rgba(var(--color-secondary-rgb), 0.3),
+  300: rgba(var(--color-secondary-rgb), 0.4),
+  400: rgba(var(--color-secondary-rgb), 0.5),
+  500: rgba(var(--color-secondary-rgb), 0.6),
+  600: rgba(var(--color-secondary-rgb), 0.7),
+  700: rgba(var(--color-secondary-rgb), 0.8),
+  800: rgba(var(--color-secondary-rgb), 0.9),
+  900: rgba(var(--color-secondary-rgb), 1),
+  A100: var(--color-secondary-rgb),
+  A200: var(--color-secondary-rgb),
+  A400: var(--color-secondary-rgb),
+  A700: var(--color-secondary-rgb),
+  contrast: (
+    50: $dark-secondary-text,
+    100: $dark-secondary-text,
+    200: $dark-secondary-text,
+    300: $dark-secondary-text,
+    400: $dark-secondary-text,
+    500: $light-secondary-text,
+    600: $light-secondary-text,
+    700: $light-secondary-text,
+    800: $light-secondary-text,
+    900: $light-secondary-text,
+    A100: $dark-secondary-text,
+    A200: $light-secondary-text,
+    A400: $light-secondary-text,
+    A700: $light-secondary-text,
+  )
+);
+$gn-warn-palette: (
+  50: rgba(var(--color-warn-rgb), 0.1),
+  100: rgba(var(--color-warn-rgb), 0.2),
+  200: rgba(var(--color-warn-rgb), 0.3),
+  300: rgba(var(--color-warn-rgb), 0.4),
+  400: rgba(var(--color-warn-rgb), 0.5),
+  500: rgba(var(--color-warn-rgb), 0.6),
+  600: rgba(var(--color-warn-rgb), 0.7),
+  700: rgba(var(--color-warn-rgb), 0.8),
+  800: rgba(var(--color-warn-rgb), 0.9),
+  900: rgba(var(--color-warn-rgb), 1),
+  A100: var(--color-warn-rgb),
+  A200: var(--color-warn-rgb),
+  A400: var(--color-warn-rgb),
+  A700: var(--color-warn-rgb),
+  contrast: (
+    50: $dark-warn-text,
+    100: $dark-warn-text,
+    200: $dark-warn-text,
+    300: $dark-warn-text,
+    400: $dark-warn-text,
+    500: $light-warn-text,
+    600: $light-warn-text,
+    700: $light-warn-text,
+    800: $light-warn-text,
+    900: $light-warn-text,
+    A100: $dark-warn-text,
+    A200: $light-warn-text,
+    A400: $light-warn-text,
+    A700: $light-warn-text,
+  )
+);
+
+// https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$gn-app-theme: mat-light-theme((
+  color: (
+    primary: mat-palette($gn-primary-palette, 900),
+    accent: mat-palette($gn-secondary-palette, 900),
+    warn: mat-palette($gn-warn-palette, 900),
+  )
+));
+
+@include angular-material-theme($gn-app-theme);
+
+
+.mat-expansion-panel-header-title {
+  color: vColor('primary')
+}

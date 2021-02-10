@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     private searchFacade: SearchFacade,
     private titleService: Title
   ) {
-    ColorService.applyCssVariables('#e73f51', '#c2e9dc', '#212029', '#fdfbff')
+    // ColorService.applyCssVariables('#e73f51', '#c2e9dc', '#212029', '#fdfbff')
   }
 
   ngOnInit(): void {

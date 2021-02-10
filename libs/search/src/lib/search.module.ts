@@ -20,6 +20,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
 import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
+import { MatButtonModule } from '@angular/material/button'
+import { MatDividerModule } from '@angular/material/divider'
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { ResultsHitsContainerComponent } from './results-hits-number/results-hit
     MatSelectModule,
     MatInputModule,
     MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
   ],
   exports: [
     SortByComponent,
