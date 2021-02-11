@@ -151,6 +151,14 @@ export function reducerSearch(
     case fromActions.PAGINATE: {
       const delta = (action as fromActions.Paginate).delta || state.params.size
       const from = Math.max(0, state.params.from + delta)
+
+      if (
+        state.results.hits &&
+        state.params.from + state.params.size >= state.results.hits.value
+      ) {
+        return { ...state }
+      }
+
       return {
         ...state,
         params: {

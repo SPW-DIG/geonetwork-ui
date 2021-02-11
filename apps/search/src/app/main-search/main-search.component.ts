@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { BootstrapService } from '@lib/common'
+import { BootstrapService, ColorService } from '@lib/common'
 import { SearchFacade } from '@lib/search'
 import { map, pluck, take, tap } from 'rxjs/operators'
 import { Title } from '@angular/platform-browser'
@@ -12,6 +12,7 @@ export class MainSearchComponent implements OnInit {
   constructor(
     private bootstrap: BootstrapService,
     private searchFacade: SearchFacade,
+    private colorService: ColorService,
     private titleService: Title
   ) {}
 
@@ -39,5 +40,13 @@ export class MainSearchComponent implements OnInit {
         })
       )
       .subscribe()
+  }
+
+  updateTheme() {
+    ColorService.updateThemeColors()
+  }
+
+  setTheme(light: string) {
+    this.colorService.setTheme(light)
   }
 }

@@ -36,6 +36,7 @@ export class ResultsListContainerComponent implements OnInit {
 
   onScrollDown() {
     this.facade.scroll()
+    this.scrollableConfig.disabled = true
   }
 
   setCurrent(record: RecordSummary) {

@@ -1,7 +1,8 @@
 // Theme colors
 $colors: (
   main: #182732,
-  light: #72AB85,
+  light: white,
+  //light: #72AB85,
   background: white,
   foreground: #005ca3,
   primary: #005ca3,
@@ -32,18 +33,19 @@ $colors: (
 
 $foreground: var(--color-primary-rgb);
 $dark-primary-text: var(--color-primary-rgb);
-$light-primary-text: var(--text-light);
+$light-primary-text: var(--color-light);
 $dark-secondary-text: var(--color-secondary-rgb);
-$light-secondary-text: var(--text);
-$dark-warn-text: var(--text);
-$light-warn-text: var(--text);
+$light-secondary-text: var(--color-light);
+$dark-warn-text: var(--color-main);
+$light-warn-text: var(--color-main);
 $light-disabled-text: var(--color-primary-rgb);
-$light-dividers: rgba(var(--text), 0.12);
-$light-focused: rgba(var(--text), 0.12);
+$light-dividers: rgba(var(--color-main), 0.12);
+$light-focused: rgba(var(--color-main), 0.12);
 
 $paletteSteps: (
   50
 );
+
 $gn-primary-palette: (
   50: rgba(var(--color-primary-rgb), 0.1),
   100: rgba(var(--color-primary-rgb), 0.2),
@@ -155,7 +157,23 @@ $gn-app-theme: mat-light-theme((
 ));
 
 @include angular-material-theme($gn-app-theme);
+//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+//@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
 
+$dark-primary: mat-palette($gn-secondary-palette);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme((
+  color: (
+    primary: $dark-primary,
+    accent: $dark-accent,
+    warn: $dark-warn,
+  )
+));
+
+.gn-app-dark-theme {
+  @include angular-material-color($dark-theme);
+}
 
 .mat-expansion-panel-header-title {
   color: vColor('primary')

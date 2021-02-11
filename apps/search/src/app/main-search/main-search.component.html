@@ -1,13 +1,41 @@
 <div [hidden]="record$ | async">
-  <div class="flex w-full items-center">
-    <catalog-site-title class="w-1/4 pl-4"></catalog-site-title>
-    <div class="w-3/4 px-4">
-      <search-fuzzy-search class="mr-2 w-1/2"></search-fuzzy-search>
+  <mat-toolbar color="primary" class="fixed z-20">
+    <div class="w-1/4">
+      <catalog-site-title></catalog-site-title>
+    </div>
+    <div>
+      <search-fuzzy-search class="w-1/2"></search-fuzzy-search>
       <search-sort-by></search-sort-by>
       <search-results-layout></search-results-layout>
     </div>
-  </div>
-  <div class="flex w-full">
+
+    <div class="flex-grow"></div>
+
+    <button
+      mat-icon-button
+      class="float-right"
+      [matMenuTriggerFor]="menu"
+      aria-label="theme.menu.selectOne"
+    >
+      <mat-icon>format_color_fill</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="updateTheme()">
+        <mat-icon></mat-icon>
+        <span>theme.updateThemeVariables</span>
+      </button>
+      <button mat-menu-item (click)="setTheme('light')">
+        <mat-icon></mat-icon>
+        <span>theme.select.light</span>
+      </button>
+      <button mat-menu-item (click)="setTheme('dark')">
+        <mat-icon></mat-icon>
+        <span>theme.select.dark</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <div class="pt-24 flex w-full">
     <search-facets-container class="w-1/4 h-full"></search-facets-container>
     <div class="w-3/4">
       <search-results-hits></search-results-hits>

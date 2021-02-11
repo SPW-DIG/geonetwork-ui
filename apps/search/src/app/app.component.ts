@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { ColorService } from '@lib/common'
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,13 @@ import { Component, OnInit } from '@angular/core'
 })
 export class AppComponent implements OnInit {
   title = ''
+  isDarkTheme = false
 
-  constructor() {
-    // ColorService.applyCssVariables('#e73f51', '#c2e9dc', '#212029', '#fdfbff')
+  constructor(private colorService: ColorService) {}
+
+  ngOnInit(): void {
+    this.colorService.theme$.subscribe(
+      (theme) => (this.isDarkTheme = theme === 'dark')
+    )
   }
-
-  ngOnInit(): void {}
 }

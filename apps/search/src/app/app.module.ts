@@ -17,6 +17,8 @@ import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatIconModule } from '@angular/material/icon'
 import { MainSearchComponent } from './main-search/main-search.component'
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatMenuModule } from '@angular/material/menu'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -39,6 +41,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     // NoopAnimationsModule,
     BrowserAnimationsModule,
     MatIconModule,
+    MatToolbarModule,
+    MatMenuModule,
   ],
   providers: [
     {

@@ -8,7 +8,7 @@ import {
 } from '@angular/core'
 import { fromEvent, Subscription } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
-import { SearchFacade } from '@lib/search'
+import { SearchFacade } from '../state/search.facade'
 
 @Component({
   selector: 'search-fuzzy-search',
