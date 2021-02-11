@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { BootstrapService, RecordSummary, ResultsListLayout } from '@lib/common'
-import { select, Store } from '@ngrx/store'
-import { SetCurrent, SetHover, SetResultsLayout } from '../state/actions'
-import { SearchState } from '../state/reducer'
 import {
-  getSearchResults,
-  getSearchResultsLayout,
-  getSearchResultsLoading,
-} from '../state/selectors'
+  InfiniteScrollModel,
+  InfiniteScrollOptionsDefault,
+  RecordSummary,
+  ResultsListLayout,
+} from '@lib/common'
+import { SetCurrent, SetHover } from '../state/actions'
+import { SearchFacade } from '../state/search.facade'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'search-results-list-container',
@@ -15,21 +15,34 @@ import {
 })
 export class ResultsListContainerComponent implements OnInit {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Input() scrollableOptions: InfiniteScrollModel = {}
 
-  results$ = this.store.pipe(select(getSearchResults))
-  layout$ = this.store.pipe(select(getSearchResultsLayout))
-  isLoading$ = this.store.pipe(select(getSearchResultsLoading))
+  scrollableConfig: InfiniteScrollModel
 
-  constructor(private store: Store<SearchState>) {}
+  private resultsHits$: Observable<any>
+
+  constructor(public facade: SearchFacade) {
+    this.resultsHits$ = facade.resultsHits$
+    facade.requestMoreResults()
+  }
 
   ngOnInit(): void {
-    this.store.dispatch(new SetResultsLayout(this.layout))
+    this.scrollableConfig = {
+      ...InfiniteScrollOptionsDefault,
+      ...this.scrollableOptions,
+    }
+    this.facade.setResultsLayout(this.layout)
+  }
+
+  onScrollDown() {
+    this.facade.scroll()
   }
 
   setCurrent(record: RecordSummary) {
-    this.store.dispatch(new SetCurrent(record))
+    this.facade.setCurrent(record)
   }
+
   setHover(record: RecordSummary) {
-    this.store.dispatch(new SetHover(record))
+    this.facade.setHover(record)
   }
 }

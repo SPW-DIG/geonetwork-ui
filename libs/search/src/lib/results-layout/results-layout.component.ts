@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { select, Store } from '@ngrx/store'
-import { SetResultsLayout } from '../state/actions'
-import { SearchState } from '../state/reducer'
-import { getSearchResultsLayout } from '../state/selectors'
 import { ResultsListLayout } from '@lib/common'
 import { take } from 'rxjs/operators'
+import { SearchFacade } from '../state/search.facade'
 
 @Component({
   selector: 'search-results-layout',
@@ -20,9 +17,8 @@ export class ResultsLayoutComponent implements OnInit {
   choices = new Map<ResultsListLayout, {}>()
 
   currentLayout
-  currentLayout$ = this.store.pipe(select(getSearchResultsLayout))
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(public searchFacade: SearchFacade) {}
 
   ngOnInit(): void {
     Object.values(ResultsListLayout).map((v) => {
@@ -33,7 +29,7 @@ export class ResultsLayoutComponent implements OnInit {
       })
     })
 
-    this.currentLayout$.pipe(take(1)).subscribe((l) => {
+    this.searchFacade.layout$.pipe(take(1)).subscribe((l) => {
       this.currentLayout =
         this.choices.get(ResultsListLayout[l]) ||
         this.change(this.choices.keys().next())
@@ -42,6 +38,6 @@ export class ResultsLayoutComponent implements OnInit {
 
   change(layout: any) {
     this.currentLayout = this.choices.get(layout.value)
-    this.store.dispatch(new SetResultsLayout(layout.value))
+    this.searchFacade.setResultsLayout(layout.value)
   }
 }

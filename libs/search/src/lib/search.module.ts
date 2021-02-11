@@ -6,6 +6,7 @@ import { UiModule } from '@lib/ui'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { TranslateModule } from '@ngx-translate/core'
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { FacetsModule } from './facets/facets.module'
 import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
 import { RecordsMetricsComponent } from './records-metrics/records-metrics.component'
@@ -22,6 +23,7 @@ import { MatInputModule } from '@angular/material/input'
 import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider'
+import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { MatDividerModule } from '@angular/material/divider'
     RecordsMetricsComponent,
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
+    SearchStateContainerDirective,
   ],
   imports: [
     CommonModule,
@@ -52,6 +55,7 @@ import { MatDividerModule } from '@angular/material/divider'
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
+    InfiniteScrollModule,
   ],
   exports: [
     SortByComponent,
@@ -61,6 +65,7 @@ import { MatDividerModule } from '@angular/material/divider'
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
     FacetsModule,
+    SearchStateContainerDirective,
   ],
 })
 export class LibSearchModule {}

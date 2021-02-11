@@ -21,11 +21,10 @@ import { TextInputComponent } from './text-input/text-input.component'
 import { RecordPreviewComponent } from './record-preview/record-preview.component'
 import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
 import { StepBarComponent } from './step-bar/step-bar.component'
-import {
-  MatProgressSpinner,
-  MatProgressSpinnerModule,
-  MatSpinner,
-} from '@angular/material/progress-spinner'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { TextAreaComponent } from './text-area/text-area.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -46,6 +45,9 @@ import {
     DragAndDropFileInputComponent,
     ProgressBarComponent,
     StepBarComponent,
+    TextAreaComponent,
+    // ChipsInputComponent,
+    // DatepickerComponent,
     ResultsHitsNumberComponent,
   ],
   imports: [
@@ -54,6 +56,9 @@ import {
     NgxDropzoneModule,
     FacetsModule,
     MatProgressSpinnerModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     DropdownSelectorComponent,
@@ -73,6 +78,9 @@ import {
     FacetsModule,
     RecordPreviewComponent,
     StepBarComponent,
+    TextAreaComponent,
+    // ChipsInputComponent,
+    // DatepickerComponent,
     ResultsHitsNumberComponent,
   ],
 })

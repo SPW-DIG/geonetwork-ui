@@ -4,16 +4,11 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core'
-import { select, Store } from '@ngrx/store'
 import { fromEvent, Subscription } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
-import { UpdateFilters } from '../state/actions'
-import { SearchState } from '../state/reducer'
-import { getSearchFilters } from '../state/selectors'
-import { MatInput } from '@angular/material/input'
+import { SearchFacade } from '@lib/search'
 
 @Component({
   selector: 'search-fuzzy-search',
@@ -24,20 +19,19 @@ import { MatInput } from '@angular/material/input'
 export class FuzzySearchComponent implements OnDestroy, AfterViewInit {
   @ViewChild('searchText') searchText: ElementRef
 
-  currentTextSearch$ = this.store.pipe(
-    select(getSearchFilters),
-    map((filters) => filters.any || '')
-  )
+  currentTextSearch$
 
-  options = ['CDDA', 'Corine']
   subs = new Subscription()
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(private searchFacade: SearchFacade) {
+    this.currentTextSearch$ = this.searchFacade.searchFilters$
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.searchText.nativeElement.focus()
     }, 0)
+
     this.subs.add(
       fromEvent(this.searchText.nativeElement, 'keyup')
         .pipe(
@@ -48,11 +42,9 @@ export class FuzzySearchComponent implements OnDestroy, AfterViewInit {
           distinctUntilChanged()
         )
         .subscribe((value) => {
-          this.store.dispatch(
-            new UpdateFilters({
-              any: value,
-            })
-          )
+          this.searchFacade.setFilters({
+            any: value,
+          })
         })
     )
   }

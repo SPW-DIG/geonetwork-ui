@@ -16,13 +16,14 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatIconModule } from '@angular/material/icon'
+import { MainSearchComponent } from './main-search/main-search.component'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : []
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MainSearchComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

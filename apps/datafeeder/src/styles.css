@@ -4,30 +4,76 @@
 :root {
   --current-font: 'Open Sans', sans-serif;
   --focus-font: 'Permanent Marker', cursive;
+  --gradient: linear-gradient(
+    65deg,
+    #fff 0%,
+    #dbeff8 100%
+  );
 }
 
-html {
-  font-family: 'dataFeeder', sans-serif !important;
+@font-face {
+  font-family: 'dataFeeder';
+  src: url('./assets/fonts/dataFeeder.woff') format('woff'),
+    url('./assets/fonts/dataFeeder.svg') format('svg'),
+    url('./assets/fonts/dataFeeder.ttf') format('ttf');
+  /* src: url('./assets/fonts/dataFeeder.eot'); FIXME file looks corrupted */
+}
+
+html, .force-font {
+  font-family: 'Open Sans', 'dataFeeder', sans-serif !important;
+}
+.force-font {
+  font-size: 1.1rem;
+}
+
+app-root {
+  background: var(--gradient);
+}
+
+ui-button button[type=button] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+ui-button button[type=button]:hover {
+  background: var(--color-primary-darker);
+  border-color: var(--color-primary-darker);
+}
+
+ui-button button[type=button].secondary {
+  background: white;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  border-width: 1px;
+}
+ui-button button[type=button].secondary:hover {
+  background: var(--color-primary-darker);
+  color: white;
 }
 
 .grey1 {
-  fill:#F2F3F4;
+  fill: #f2f3f4;
 }
 
 .grey3 {
-  fill:#686C6D;
+  fill: #686c6d;
 }
 
 .grey2 {
-  fill:#CFD8DC;
+  fill: #cfd8dc;
 }
 
 .opacity-20 {
-  opacity:0.2;
+  opacity: 0.2;
 }
 
 .opacity-50 {
-  opacity:0.5;
+  opacity: 0.5;
+}
+
+.text-current {
+  font-family: var(--current-font);
+  font-size: 30px;
+  font-weight: normal;
 }
 
 .text-focus {
@@ -72,4 +118,34 @@ html {
 
 .current-color {
   fill: var(--color-main);
+}
+
+.icon-title:before {
+  content: '\e90a';
+  font-size: 35px;
+}
+
+.icon-description:before {
+  content: '\e90b';
+  font-size: 35px;
+}
+
+.icon-tag:before {
+  content: '\e90c';
+  font-size: 35px;
+}
+
+.icon-date:before {
+  content: '\e90d';
+  font-size: 35px;
+}
+
+.icon-scale:before {
+  content: '\e90e';
+  font-size: 35px;
+}
+
+.icon-process:before {
+  content: '\e90f';
+  font-size: 35px;
 }
