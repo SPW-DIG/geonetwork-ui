@@ -39,4 +39,4 @@ export enum ResultsListLayout {
   TITLE = 'TITLE',
 }
 
-export const RESULTS_PAGE_SIZE = 12
+export const RESULTS_PAGE_SIZE = 20

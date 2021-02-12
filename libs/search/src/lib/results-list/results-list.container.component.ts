@@ -5,7 +5,6 @@ import {
   RecordSummary,
   ResultsListLayout,
 } from '@lib/common'
-import { SetCurrent, SetHover } from '../state/actions'
 import { SearchFacade } from '../state/search.facade'
 import { Observable } from 'rxjs'
 
@@ -32,6 +31,9 @@ export class ResultsListContainerComponent implements OnInit {
       ...this.scrollableOptions,
     }
     this.facade.setResultsLayout(this.layout)
+    this.facade.isEndOfResults$.subscribe((isTheEnd) => {
+      this.scrollableConfig.disabled = isTheEnd
+    })
   }
 
   onScrollDown() {
