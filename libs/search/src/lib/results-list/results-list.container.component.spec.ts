@@ -29,6 +29,7 @@ const searchFacadeMock = {
   results$: of(['one']),
   layout$: of('CARD'),
   setResultsLayout: jest.fn(),
+  requestMoreResults: jest.fn(),
   scroll: jest.fn(),
 }
 

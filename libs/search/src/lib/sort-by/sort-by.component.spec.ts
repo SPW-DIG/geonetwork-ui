@@ -5,6 +5,7 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 import { SortByComponent } from './sort-by.component'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 
 describe('SortByComponent', () => {
   let component: SortByComponent
@@ -22,6 +23,7 @@ describe('SortByComponent', () => {
           initialState,
         }),
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   }))
 

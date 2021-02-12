@@ -8,6 +8,8 @@ import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { SearchFacade } from '@lib/search'
 import { of } from 'rxjs'
+import { MatIcon } from '@angular/material/icon'
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 
 const searchFacadeMock = {
   isLoading$: of(true),
@@ -39,6 +41,7 @@ describe('FuzzySearchComponent', () => {
           initialState,
         }),
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   }))
 
