@@ -1,5 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core'
 import { RecordSummary } from '@lib/common'
+import { fromEvent, Subscription } from 'rxjs'
 
 @Component({
   selector: 'ui-record-preview',
@@ -9,7 +18,7 @@ export class RecordPreviewComponent implements OnInit {
   @Input() record: RecordSummary
   @Input() linkTarget = '_blank'
 
-  constructor() {}
+  constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {}
 

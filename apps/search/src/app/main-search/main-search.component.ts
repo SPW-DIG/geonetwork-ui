@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { BootstrapService, ColorService } from '@lib/common'
+import { BootstrapService, ColorService, RecordSummary } from '@lib/common'
 import { SearchFacade } from '@lib/search'
 import { map, pluck, take, tap } from 'rxjs/operators'
 import { Title } from '@angular/platform-browser'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-main-search',
@@ -16,7 +17,7 @@ export class MainSearchComponent implements OnInit {
     private titleService: Title
   ) {}
 
-  record$ = this.searchFacade.current$
+  record$: Observable<RecordSummary>
 
   ngOnInit(): void {
     this.bootstrap
@@ -40,6 +41,8 @@ export class MainSearchComponent implements OnInit {
         })
       )
       .subscribe()
+
+    this.record$ = this.searchFacade.current$
   }
 
   updateTheme() {

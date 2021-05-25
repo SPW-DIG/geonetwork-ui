@@ -57,7 +57,7 @@ describe('FacetBlockComponent', () => {
 
   describe('Input collapsed', () => {
     beforeEach(() => {
-      component.collapsed = true
+      component.expanded = true
       fixture.detectChanges()
     })
     it('removes the collapsible content', () => {
@@ -72,7 +72,7 @@ describe('FacetBlockComponent', () => {
   describe('Toggle collapsed', () => {
     let icon: DebugElement
     beforeEach(() => {
-      component.collapsed = true
+      component.expanded = true
       fixture.detectChanges()
       icon = de.query(By.css('.icon-expand'))
     })

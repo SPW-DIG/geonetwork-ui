@@ -1,9 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { getCurrentRecord, SearchState, SetCurrent } from '@lib/search'
+import {
+  getCurrentRecord,
+  SearchFacade,
+  SearchState,
+  SetCurrent,
+} from '@lib/search'
 import { animate, style, transition, trigger } from '@angular/animations'
 import { Title } from '@angular/platform-browser'
 import { filter, take } from 'rxjs/operators'
+import { Observable } from 'rxjs'
+import { RecordSummary } from '../../../../common/src'
 
 @Component({
   selector: 'data-record-view',
@@ -20,18 +27,23 @@ import { filter, take } from 'rxjs/operators'
 })
 export class DataRecordViewComponent implements OnInit {
   @Input() uuid: string
+  record$: Observable<RecordSummary>
 
-  record$ = this.store.pipe(select(getCurrentRecord))
+  constructor(
+    private searchFacade: SearchFacade,
+    private store: Store<SearchState>,
+    private titleService: Title
+  ) {}
+
   previousTitle: string
 
   unsetRecord() {
-    this.store.dispatch(new SetCurrent(null))
+    this.searchFacade.setCurrent(null)
     this.titleService.setTitle(this.previousTitle)
   }
 
-  constructor(private store: Store<SearchState>, private titleService: Title) {}
-
   ngOnInit(): void {
+    this.record$ = this.searchFacade.current$
     this.record$
       .pipe(
         take(1),
