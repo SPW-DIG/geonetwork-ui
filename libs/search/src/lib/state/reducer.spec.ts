@@ -47,6 +47,20 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('SetConfigFilters action', () => {
+    it('set config filters', () => {
+      const action = new fromActions.SetConfigFilters({
+        custom: { any: 'blah', other: 'Some value' },
+        elastic: {},
+      })
+      const state = reducerSearch(initialStateSearch, action)
+      expect(state.config.filters).toEqual({
+        custom: { any: 'blah', other: 'Some value' },
+        elastic: {},
+      })
+    })
+  })
+
   describe('SetFilters action', () => {
     it('should add new filters', () => {
       const action = new fromActions.SetFilters({
@@ -278,6 +292,27 @@ describe('Search Reducer', () => {
         const clone = JSON.parse(JSON.stringify(ES_FIXTURE_AGGS_REQUEST))
         clone['tag.default'].terms.size = 30
         expect(state.config.aggregations).toEqual(clone)
+      })
+      it('when intial size is Nan', () => {
+        const action = new fromActions.UpdateRequestAggregationTerm(
+          'tag.default',
+          { increment: 20 }
+        )
+        const state = reducerSearch(
+          {
+            ...initialStateSearch,
+            config: {
+              ...initialStateSearch.config,
+              aggregations: {
+                'tag.default': {
+                  terms: { field: 'tag.default' },
+                },
+              },
+            },
+          },
+          action
+        )
+        expect(state.config.aggregations['tag.default'].terms.size).toEqual(20)
       })
     })
 

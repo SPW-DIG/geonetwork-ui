@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { BASE_PATH, Configuration } from '@lib/datafeeder-api'
+import { ApiModule, BASE_PATH, Configuration } from '@lib/datafeeder-api'
+import { StoreModule } from '@ngrx/store'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { environment } from '../environments/environment'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -27,8 +30,7 @@ import { SuccessPublishPageIllustrationComponent } from './presentation/componen
 import { SummarizePageComponent } from './presentation/pages/summarize-page/summarize-page.component'
 import { SummarizeIllustrationComponent } from './presentation/components/svg/summarize-illustration/summarize-illustration.component'
 import { SummarizeBackgroundComponent } from './presentation/components/svg/summarize-background/summarize-background.component'
-
-export const API_BASE_PATH = '/datafeeder'
+import { DATAFEEDER_STATE_KEY, reducer } from './store/datafeeder.reducer'
 
 export function apiConfigurationFactory() {
   return new Configuration({
@@ -65,12 +67,17 @@ export function apiConfigurationFactory() {
     HttpClientModule,
     I18nModule,
     EditorModule,
+    ApiModule.forRoot(apiConfigurationFactory),
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    StoreModule.forRoot({
+      [DATAFEEDER_STATE_KEY]: reducer,
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [
     {
       provide: BASE_PATH,
-      useFactory: () => API_BASE_PATH,
+      useFactory: () => environment.apiUrl,
     },
   ],
   bootstrap: [AppComponent],

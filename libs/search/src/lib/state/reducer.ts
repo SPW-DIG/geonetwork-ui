@@ -1,4 +1,9 @@
-import { RecordSummary, RESULTS_PAGE_SIZE, SearchFilters } from '@lib/common'
+import {
+  RecordSummary,
+  RESULTS_PAGE_SIZE,
+  SearchFilters,
+  StateConfigFilters,
+} from '@lib/common'
 import * as fromActions from './actions'
 import { DEFAULT_SEARCH_KEY } from './actions'
 
@@ -14,6 +19,7 @@ export interface SearchStateParams {
 export interface SearchStateSearch {
   config: {
     aggregations?: any
+    filters?: StateConfigFilters
   }
   params: SearchStateParams
   results: {
@@ -34,7 +40,9 @@ export type SearchState = { [key: string]: SearchStateSearch }
 
 export const initSearch = (): SearchStateSearch => {
   return {
-    config: {},
+    config: {
+      filters: {},
+    },
     params: {
       filters: {},
       size: RESULTS_PAGE_SIZE,
@@ -80,6 +88,15 @@ export function reducerSearch(
   action: fromActions.SearchActions
 ): SearchStateSearch {
   switch (action.type) {
+    case fromActions.SET_CONFIG_FILTERS: {
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          filters: { ...action.payload },
+        },
+      }
+    }
     case fromActions.SET_FILTERS: {
       return {
         ...state,
@@ -153,7 +170,6 @@ export function reducerSearch(
         params: {
           ...state.params,
           from: 0,
-          size: state.params.size,
         },
       }
     case fromActions.SCROLL:
@@ -242,7 +258,7 @@ export function reducerSearch(
       const { increment, ...patch } = action.patch
 
       if (increment) {
-        patch.size = terms.size + increment
+        patch.size = (terms.size || 0) + increment
       }
       return {
         ...state,

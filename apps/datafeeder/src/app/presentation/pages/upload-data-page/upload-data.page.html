@@ -10,7 +10,7 @@
 
       <div class="pb-20 relative">
         <app-upload-data-component
-          [maxFileSizeMb]="30"
+          [maxFileSizeMb]="maxFileSize"
           (jobId$)="onJobIdGet($event)"
           (errors$)="onUploadError($event)"
         ></app-upload-data-component>
@@ -22,8 +22,8 @@
       </div>
 
       <app-upload-data-rules
-        maxFileSize="30"
-        [acceptedFileFormats]="['SHP', 'GeoJSON', 'GeoPackage', 'Spatialite']"
+        [maxFileSize]="maxFileSize"
+        [acceptedFileFormats]="['SHP']"
       >
       </app-upload-data-rules>
     </div>

@@ -89,7 +89,7 @@ export class SearchEffects {
             this.searchService.search(
               'bucket',
               JSON.stringify(
-                this.esService.search(
+                this.esService.getSearchRequestBody(
                   state,
                   ElasticsearchMetadataModels.SUMMARY
                 )
@@ -97,7 +97,7 @@ export class SearchEffects {
             )
           ),
           switchMap((response: SearchResponse<any>) => {
-            const records = this.esMapper.toRecordSummary(
+            const records = this.esMapper.toRecordSummaries(
               response,
               this.searchService.configuration.basePath
             )

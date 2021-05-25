@@ -1,35 +1,44 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core'
 import { AggregationsTypesEnum } from '@lib/common'
 import { fromEvent, Subscription } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
-import { ModelBlock, ModelItem } from '../facets.model'
+import {
+  FacetPath,
+  FacetSelectEvent,
+  ModelBlock,
+  ModelItem,
+} from '../facets.model'
 
 @Component({
   selector: 'ui-facet-block',
   templateUrl: './facet-block.component.html',
   styleUrls: ['./facet-block.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FacetBlockComponent
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() expanded = true
   @Input() filter: string
   @Input() model: ModelBlock
-  @Input() selectedPaths: string[][]
+  @Input() selectedPaths: FacetPath[]
 
   @ViewChild('filterInput') eltFilterInputRef: ElementRef<HTMLInputElement>
 
   @Output() filterChange = new EventEmitter<string>()
-  @Output() itemSelected = new EventEmitter<string[]>()
-  @Output() itemUnselected = new EventEmitter<string[]>()
+  @Output() itemChange = new EventEmitter<FacetSelectEvent>()
   @Output() more = new EventEmitter<void>()
 
   title: string
@@ -39,8 +48,8 @@ export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    this.title = this.model.key
     this.hasItems = this.countItems() > 0
+    this.title = this.model.key
   }
 
   ngAfterViewInit(): void {
@@ -75,17 +84,19 @@ export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
       .includes(JSON.stringify(item.path))
   }
 
+  emitItemChange(item: ModelItem): void {
+    const eventOutput = { item, block: this.model }
+    this.itemChange.emit(eventOutput)
+  }
+
   onItemSelectedChange(selected: boolean, item: ModelItem) {
-    if (selected) {
-      this.itemSelected.emit(item.path)
-    } else {
-      this.itemUnselected.emit(item.path)
-    }
+    item.selected = selected
+    this.emitItemChange(item)
   }
 
   onItemInvertedChange(inverted: boolean, item: ModelItem) {
-    // TODO: ???
-    console.log('onListItemInvertedChange', inverted, item)
+    item.inverted = inverted
+    this.emitItemChange(item)
   }
 
   onMoreClick(event: Event) {
@@ -103,6 +114,13 @@ export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const model = changes.model
+    if (model) {
+      this.hasItems = this.countItems() > 0
+    }
   }
 }
 

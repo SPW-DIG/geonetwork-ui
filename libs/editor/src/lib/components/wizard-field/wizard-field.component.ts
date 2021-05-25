@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   Input,
@@ -52,13 +53,13 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     )
     switch (this.wizardFieldConfig.type) {
       case WizardFieldType.TEXT: {
-        return data
+        return data || ''
       }
       case WizardFieldType.CHIPS: {
         return data ? JSON.parse(data) : []
       }
       case WizardFieldType.TEXT_AREA: {
-        return data
+        return data || ''
       }
       case WizardFieldType.DATA_PICKER: {
         return data ? new Date(Number(data)) : new Date()
@@ -151,7 +152,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
       this.datepicker.selectedDate.subscribe((value: Date) => {
         this.wizardService.onWizardWizardFieldDataChanged(
           this.wizardFieldConfig.id,
-          value.getTime().toString()
+          (+value).toString()
         )
       })
     )

@@ -2,12 +2,19 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Injector,
   Input,
+  OnChanges,
+  OnInit,
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core'
-import { ResultsListLayout } from '@lib/common'
-import { SearchFacade } from '@lib/search'
+import {
+  ResultsListLayout,
+  SearchFilters,
+  StateConfigFilters,
+} from '@lib/common'
+import { SearchFacade, SearchStateParams } from '@lib/search'
 import { BaseComponent } from '../base.component'
 
 @Component({
@@ -18,13 +25,20 @@ import { BaseComponent } from '../base.component'
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade],
 })
-export class GnResultsListComponent extends BaseComponent {
+export class GnResultsListComponent
+  extends BaseComponent
+  implements OnInit, OnChanges {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   @Input() size = 10
-  @Input() filter = ''
+  @Input() query: string
+  @Input() filter: string
+  scrollDisabled: boolean
+  @Input() set fixed(value: string) {
+    this.scrollDisabled = value === 'true'
+  }
 
-  constructor(facade: SearchFacade, private changeDetector: ChangeDetectorRef) {
-    super(facade)
+  constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
+    super(injector)
   }
 
   ngOnInit(): void {
@@ -39,11 +53,30 @@ export class GnResultsListComponent extends BaseComponent {
   }
 
   private setSearch_() {
-    this.facade.setSearch({
-      filters: { any: this.filter },
+    const filter = this.filter
+    const query = this.query
+    const searchActionPayload: SearchStateParams = {
       size: this.size,
       from: 0,
-    })
+      filters: {},
+    }
+    if (query) {
+      try {
+        // we assume it's an object
+        const queryFilters: SearchFilters = JSON.parse(query)
+        searchActionPayload.filters = queryFilters
+      } catch (e) {
+        // we assume it's a string
+        searchActionPayload.filters = {
+          any: query,
+        }
+      }
+    }
+    if (filter) {
+      const configFilters: StateConfigFilters = JSON.parse(filter)
+      this.facade.setConfigFilters(configFilters)
+    }
+    this.facade.setSearch(searchActionPayload)
   }
 
   ngOnChanges(changes: SimpleChanges): void {

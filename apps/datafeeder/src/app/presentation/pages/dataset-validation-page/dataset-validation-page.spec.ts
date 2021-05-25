@@ -7,6 +7,8 @@ import {
   UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import { of } from 'rxjs'
+import { WizardService } from '@lib/editor'
+import { DatafeederFacade } from '../../../store/datafeeder.facade'
 import { DatasetValidationPageComponent } from './dataset-validation-page'
 
 const jobMock: UploadJobStatusApiModel = {
@@ -21,12 +23,20 @@ const jobMock: UploadJobStatusApiModel = {
   ],
 }
 
+const facadeMock = {
+  upload$: of(jobMock),
+}
+
 const fileUploadApiServiceMock = {
-  findUploadJob: jest.fn(() => of(jobMock)),
   getBounds: jest.fn(() =>
     of({ crs: { srs: 'EPSG:4326' }, minx: 0, maxx: 1, miny: 2, maxy: 3 })
   ),
   getSampleFeature: jest.fn(() => of({ id: 'feature_id' })),
+}
+
+const wizardServiceMock = {
+  getConfigurationStepNumber: jest.fn(() => 6),
+  initialize: jest.fn(),
 }
 
 const activatedRouteMock = {
@@ -36,6 +46,8 @@ const activatedRouteMock = {
 const routerMock = {
   navigate: jest.fn(),
 }
+
+const proj = 'EPSG:3857'
 
 describe('DatasetValidationPageComponent', () => {
   let component: DatasetValidationPageComponent
@@ -50,6 +62,14 @@ describe('DatasetValidationPageComponent', () => {
         {
           provide: FileUploadApiService,
           useValue: fileUploadApiServiceMock,
+        },
+        {
+          provide: WizardService,
+          useValue: wizardServiceMock,
+        },
+        {
+          provide: DatafeederFacade,
+          useValue: facadeMock,
         },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerMock },
@@ -72,13 +92,16 @@ describe('DatasetValidationPageComponent', () => {
       expect(fileUploadApiServiceMock.getBounds).toHaveBeenCalledWith(
         1,
         'f_name',
-        'EPSG:3857',
+        proj,
         true
       )
       expect(fileUploadApiServiceMock.getSampleFeature).toHaveBeenCalledWith(
         1,
         'f_name',
-        0
+        0,
+        undefined,
+        proj,
+        true
       )
 
       expect(component.geoJSONData).toEqual({ id: 'feature_id' })

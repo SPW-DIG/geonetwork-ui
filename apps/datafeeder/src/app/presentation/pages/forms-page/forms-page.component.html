@@ -9,6 +9,9 @@
       ></ui-step-bar>
     </div>
     <lib-wizard
+      [id]="id"
+      [initialConfig]="wizardConfig"
+      [requiredMsgKey]="requiredMsgKey"
       (stepChanges)="handleStepChanges($event)"
       (stepsNumber)="handleStepNumberChanges($event)"
     ></lib-wizard>

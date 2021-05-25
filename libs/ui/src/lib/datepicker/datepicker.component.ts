@@ -1,6 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+// import {
+//   AfterViewInit,
+//   Component,
+//   EventEmitter,
+//   Input,
+//   OnInit,
+//   Output,
+// } from '@angular/core'
 // import { IMyDateModel, IMyDpOptions } from 'mydatepicker'
-
+//
 // @Component({
 //   selector: ' ui-datepicker',
 //   templateUrl: './datepicker.component.html',
@@ -26,13 +33,13 @@ export class DatepickerComponent {
   // }
   //
   // initializeDate(date: Date) {
-  //   const sDate = date || new Date()
   //   this.model = {
-  //     date: {
-  //       year: sDate.getFullYear(),
-  //       month: sDate.getMonth() + 1,
-  //       day: sDate.getDate(),
-  //     },
+  //     jsdate: date || new Date(),
   //   }
+  // }
+  //
+  // ngAfterViewInit() {
+  //   // to delay emit after parent viewinit completed
+  //   setTimeout(() => this.selectedDate.emit(this.model.jsdate))
   // }
 }

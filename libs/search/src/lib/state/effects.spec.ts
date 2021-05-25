@@ -37,6 +37,7 @@ const initialStateMock = {
   [DEFAULT_SEARCH_KEY]: {
     ...initialStateSearchMock,
     config: {
+      ...initialStateSearchMock.config,
       aggregations: ES_FIXTURE_AGGS_REQUEST,
     },
   },
@@ -55,7 +56,7 @@ const authServiceMock = {
   authReady: () => of(true),
 }
 const esMapperMock = {
-  toRecordSummary: () => [],
+  toRecordSummaries: () => [],
 }
 
 describe('Effects', () => {

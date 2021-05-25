@@ -8,12 +8,16 @@ import {
 } from '@lib/datafeeder-api'
 import { of } from 'rxjs'
 import { TestScheduler } from 'rxjs/testing'
+import { DatafeederFacade } from '../../../store/datafeeder.facade'
 import { AnalysisProgressPageComponent } from './analysis-progress.page'
 
 const jobMock: UploadJobStatusApiModel = {
   jobId: '1234',
   status: AnalysisStatusEnumApiModel.DONE,
-  progress: 100,
+  progress: 1,
+}
+const facadeMock = {
+  setUpload: jest.fn(),
 }
 
 const fileUploadApiServiceMock = {
@@ -42,6 +46,10 @@ describe('AnalysisProgress.PageComponent', () => {
           provide: FileUploadApiService,
           useValue: fileUploadApiServiceMock,
         },
+        {
+          provide: DatafeederFacade,
+          useValue: facadeMock,
+        },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerMock },
       ],
@@ -63,14 +71,19 @@ describe('AnalysisProgress.PageComponent', () => {
       expect(actual).toEqual(expected)
     })
     scheduler.run(({ expectObservable }) => {
-      const expected = '250ms (a-|)'
+      const expected = '500ms (a-|)'
       const values = {
         a: jobMock,
       }
       expectObservable(component.statusFetch$).toBe(expected, values)
     })
     expect(fileUploadApiServiceMock.findUploadJob).toHaveBeenCalledWith(1)
-    expect(component.progress).toBe(100)
+    expect(facadeMock.setUpload).toHaveBeenCalledWith({
+      jobId: '1234',
+      progress: 1,
+      status: 'DONE',
+    })
+    expect(component.progress).toBe(1)
   })
 
   describe('Analysis DONE', () => {
