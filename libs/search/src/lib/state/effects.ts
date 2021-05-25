@@ -80,7 +80,7 @@ export class SearchEffects {
       ofType(REQUEST_MORE_RESULTS),
       // flatMap is used because of multiple search concerns
       // TODO: should implement our own switchMap to filter by searchId
-      flatMap((action: SearchActions) =>
+      switchMap((action: SearchActions) =>
         this.authService.authReady().pipe(
           withLatestFrom(
             this.store$.pipe(select(getSearchStateSearch, action.id))

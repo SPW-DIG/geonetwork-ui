@@ -24,6 +24,7 @@ import { ResultsHitsContainerComponent } from './results-hits-number/results-hit
 import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider'
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { SearchStateContainerDirective } from './state/container/search-state.co
     MatButtonModule,
     MatDividerModule,
     InfiniteScrollModule,
+    MatAutocompleteModule,
   ],
   exports: [
     SortByComponent,

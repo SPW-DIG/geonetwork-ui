@@ -1,9 +1,28 @@
-<mat-form-field>
+<mat-form-field
+  floatLabel="never"
+  class="w-full">
   <input
     matInput
     placeholder="Search"
     #searchText
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    (keyup.enter)="triggerSearch($event.target.value)"
     [value]="currentTextSearch$ | async"
   />
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
+
+<mat-autocomplete
+  #auto="matAutocomplete"
+  cdkScrollable=""
+  (optionSelected)="triggerSearch($event.option.value)"
+>
+  <mat-option
+    *ngFor="let suggestion of suggestions | async"
+    [value]="suggestion"
+    class="p-2 text-sm text-primary-lighter"
+  >
+    {{ suggestion }}
+  </mat-option>
+</mat-autocomplete>
