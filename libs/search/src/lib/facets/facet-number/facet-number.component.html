@@ -1,0 +1,12 @@
+<div *ngIf="title">{{ title }}</div>
+<ui-facet-list
+  class="w-full"
+  [layout]="layout"
+  [field]="field"
+  [icons]="icons"
+  [models]="models$ | async"
+  [selectedPaths]="selectedPaths$ | async"
+  (itemChange)="onItemChange($event)"
+  (more)="onMore($event)"
+  (filterChange)="onFilterChange($event)"
+></ui-facet-list>

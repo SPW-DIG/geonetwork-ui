@@ -23,16 +23,17 @@ import {
 } from '../facets.model'
 
 @Component({
-  selector: 'ui-facet-block',
-  templateUrl: './facet-block.component.html',
-  styleUrls: ['./facet-block.component.css'],
+  selector: 'ui-facet-number',
+  templateUrl: './facet-number.component.html',
+  styleUrls: ['./facet-number.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FacetBlockComponent
+export class FacetNumberComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input() expanded = true
   @Input() filter: string
+  @Input() icons: any = {}
   @Input() model: ModelBlock
   @Input() selectedPaths: FacetPath[]
 
@@ -44,12 +45,14 @@ export class FacetBlockComponent
 
   title: string
   hasItems: boolean
+  hasIcons: boolean
   private subscription = new Subscription()
 
   constructor() {}
 
   ngOnInit(): void {
     this.hasItems = this.countItems() > 0
+    this.hasIcons = this.icons && Object.keys(this.icons).length > 0
     this.title = this.model.key
   }
 
@@ -126,7 +129,7 @@ export class FacetBlockComponent
 }
 
 @Component({ selector: 'ui-facet-block', template: '' })
-export class FacetBlockStubComponent implements Partial<FacetBlockComponent> {
+export class FacetBlockStubComponent implements Partial<FacetNumberComponent> {
   @Input() title: string
   @Input() model: ModelBlock
   @Input() selectedPaths: string[][]

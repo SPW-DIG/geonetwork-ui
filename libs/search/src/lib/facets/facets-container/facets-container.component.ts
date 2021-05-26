@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { EsRequestAggTerm, SearchFilters } from '@lib/common'
 import { FacetSelectEvent, ModelBlock } from '@lib/ui'
 import { combineLatest, Observable } from 'rxjs'
@@ -25,6 +25,8 @@ marker('facets.block.title.th_regions_tree.default')
   styleUrls: ['./facets-container.component.css'],
 })
 export class FacetsContainerComponent implements OnInit {
+  @Input() field
+
   selectedPaths$: Observable<string[][]>
   models$: Observable<ModelBlock[]>
 

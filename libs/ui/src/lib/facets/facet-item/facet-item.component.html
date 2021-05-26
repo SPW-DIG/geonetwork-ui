@@ -1,8 +1,22 @@
 <div
-  class="flex flex-row items-center group px-1 my-1 hover:bg-gray-100 rounded-sm"
+  class="
+    flex flex-row
+    items-center
+    group
+    px-1
+    my-1
+    hover:bg-gray-100
+    rounded-sm
+  "
 >
   <label
-    class="flex-grow flex-shrink truncate cursor-pointer text-gray-900 group-hover:text-black"
+    class="
+      flex-grow flex-shrink
+      truncate
+      cursor-pointer
+      text-gray-900
+      group-hover:text-black
+    "
   >
     <mat-checkbox
       [ngModel]="selected"
@@ -16,7 +30,13 @@
   </label>
   <div
     *ngIf="!inverted"
-    class="flex-shrink-0 cursor-pointer invisible group-hover:visible icon-exclude"
+    class="
+      flex-shrink-0
+      cursor-pointer
+      invisible
+      group-hover:visible
+      icon-exclude
+    "
     style="min-width: 20px"
     (click)="toggleInverted()"
   >
@@ -35,7 +55,13 @@
   </div>
   <div
     *ngIf="inverted"
-    class="flex-shrink-0 cursor-pointer invisible group-hover:visible icon-include"
+    class="
+      flex-shrink-0
+      cursor-pointer
+      invisible
+      group-hover:visible
+      icon-include
+    "
     style="min-width: 20px"
     (click)="toggleInverted()"
   >

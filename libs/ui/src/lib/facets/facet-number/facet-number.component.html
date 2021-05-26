@@ -1,0 +1,87 @@
+<div class="w-full" *ngIf="hasItems">
+  <div *ngIf="canFilter">
+    <svg
+      class="h-4 w-4 my-2"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+      />
+    </svg>
+  </div>
+  <input
+    type="text"
+    class="
+      w-full
+      rounded
+      border border-1 border-gray-300
+      input-filter
+      py-1
+      px-2
+      pl-8
+      focus:outline-none
+      focus:border-blue-400
+    "
+    *ngIf="canFilter"
+    #filterInput
+  />
+
+  <div class="flex">
+    <div
+      *ngFor="let item of getItems()"
+      class="
+        flex-1 flex
+        m-1
+        md:m-2
+        p-1
+        md:p-2
+        max-w-xs
+        border border-primary-100
+        rounded-sm
+        bg-primary-300
+        hover:bg-primary-400
+        overflow-hidden
+      "
+      [attr.title]="item.value | translate"
+      [ngClass]="{
+        'bg-primary': isItemSelected(item),
+        'text-white': isItemSelected(item)
+      }"
+      (click)="onItemSelectedChange(isItemSelected(item) ? false : true, item)"
+    >
+      <div
+        *ngIf="icons[item.value]"
+        class="w-1/3 text-center text-3xl md:text-5xl"
+      >
+        <ui-facet-icon [icon]="icons[item.value]"></ui-facet-icon>
+      </div>
+
+      <div
+        class=""
+        [ngClass]="{ 'w-2/3': icons[item.value], 'flex-grow': !hasIcons }"
+      >
+        <div
+          class="text-3xl md:text-5xl font-bold"
+          [ngClass]="{ 'text-center': !hasIcons }"
+        >
+          {{ item.count }}
+        </div>
+        <div
+          class="text-base md:text-lg font-medium clamp-2"
+          [ngClass]="{ 'text-center': !hasIcons }"
+        >
+          {{ item.value | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick($event)"
+    >more</a
+  >
+</div>

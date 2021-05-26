@@ -1,8 +1,35 @@
-<ui-facet-block
-  *ngFor="let model of models; trackBy: trackByIndexKey"
-  [model]="model"
-  [selectedPaths]="getBlockSelectedPaths(model)"
-  (itemChange)="onItemChange($event)"
-  (filterChange)="onFilterChange(model.key, $event)"
-  (more)="onMore(model.key)"
-></ui-facet-block>
+<ng-container [ngSwitch]="layout">
+  <ng-container
+    *ngSwitchCase="layoutEnum.CHECKBOX"
+    [ngTemplateOutlet]="default"
+  ></ng-container>
+  <ng-container *ngSwitchCase="layoutEnum.NUMBER">
+    <ui-facet-number
+      *ngFor="
+        let model of models | filterObjectByKey: 'key':field;
+        trackBy: trackByIndexKey
+      "
+      [model]="model"
+      [icons]="iconsConfig"
+      [selectedPaths]="getBlockSelectedPaths(model)"
+      (itemChange)="onItemChange($event)"
+      (filterChange)="onFilterChange(model.key, $event)"
+      (more)="onMore(model.key)"
+    ></ui-facet-number>
+  </ng-container>
+  <ng-container *ngSwitchDefault [ngTemplateOutlet]="default"></ng-container>
+</ng-container>
+
+<ng-template #default>
+  <ui-facet-block
+    *ngFor="
+      let model of models | filterObjectByKey: 'key':field;
+      trackBy: trackByIndexKey
+    "
+    [model]="model"
+    [selectedPaths]="getBlockSelectedPaths(model)"
+    (itemChange)="onItemChange($event)"
+    (filterChange)="onFilterChange(model.key, $event)"
+    (more)="onMore(model.key)"
+  ></ui-facet-block>
+</ng-template>
