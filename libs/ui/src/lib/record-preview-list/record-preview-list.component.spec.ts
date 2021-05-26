@@ -24,6 +24,10 @@ describe('RecordPreviewListComponent', () => {
       abstract: 'Abcd',
       metadataUrl: '/abcd.html',
       thumbnailUrl: '/abcd.jpg',
+      geom: null,
+      format: null,
+      allThesaurus: null,
+      link: null,
     }
     fixture.detectChanges()
   })

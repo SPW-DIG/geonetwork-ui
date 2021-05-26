@@ -27,7 +27,8 @@ import { BaseComponent } from '../base.component'
 })
 export class GnResultsListComponent
   extends BaseComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges
+{
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   @Input() size = 10
   @Input() query: string

@@ -29,7 +29,8 @@ const PADDING = 50
   styleUrls: ['./data-import-validation-map-panel.css'],
 })
 export class DataImportValidationMapPanelComponent
-  implements OnInit, AfterViewInit {
+  implements OnInit, AfterViewInit
+{
   @ViewChild('map') mapElt: ElementRef
 
   @Input() showProperties = false

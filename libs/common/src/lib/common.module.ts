@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core'
 import { SafePipe } from './pipes/SafePipe'
+import { FilterObjectByKeyPipe } from './pipes/FilterObjectByKeyPipe'
 
 @NgModule({
-  declarations: [SafePipe],
+  declarations: [SafePipe, FilterObjectByKeyPipe],
   imports: [],
-  exports: [SafePipe],
+  exports: [SafePipe, FilterObjectByKeyPipe],
 })
 export class CommonModule {}

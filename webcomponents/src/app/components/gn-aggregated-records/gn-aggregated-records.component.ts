@@ -18,7 +18,8 @@ import { BaseComponent } from '../base.component'
 })
 export class GnAggregatedRecordsComponent
   extends BaseComponent
-  implements OnInit {
+  implements OnInit
+{
   @Input() aggregationField: string
   @Input() aggregationMaxCount = 20
   @Input() aggregationQueryString: string

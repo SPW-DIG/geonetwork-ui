@@ -34,7 +34,13 @@
     </mat-menu>
   </mat-toolbar>
 
-  <div class="pt-24 flex w-full">
+  <search-facet-number
+    class="pt-24 flex h-full w-full"
+    field="cl_spatialRepresentationType.key"
+    icons='{"vector": "class:multiline_chart", "grid": "class:grid_on", "textTable": "class:table_rows", "video": "class:video_camera_back"}'
+  ></search-facet-number>
+
+  <div class="flex w-full">
     <search-facets-container class="w-1/4 h-full"></search-facets-container>
     <div class="w-3/4">
       <search-results-hits></search-results-hits>

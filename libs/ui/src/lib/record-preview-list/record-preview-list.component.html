@@ -1,5 +1,13 @@
 <div
-  class="h-40 bg-white transition duration-200 hover:bg-gray-100 border-gray-300 rounded-md"
+  class="
+    h-40
+    bg-white
+    transition
+    duration-200
+    hover:bg-gray-100
+    border-gray-300
+    rounded-md
+  "
 >
   <a
     [href]="record.metadataUrl"
@@ -30,7 +38,12 @@
             <span translate>{{ record.updateFrequency }}</span>
           </div>
           <div
-            class="text-gray-500 text-xs border-gray-300 truncate viewable-downloadable"
+            class="
+              text-gray-500 text-xs
+              border-gray-300
+              truncate
+              viewable-downloadable
+            "
             *ngIf="isViewable || isDownloadable"
           >
             <span *ngIf="isViewable" translate>record.action.view</span>

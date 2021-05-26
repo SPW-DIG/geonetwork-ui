@@ -44,4 +44,10 @@ export enum ResultsListLayout {
   TITLE = 'TITLE',
 }
 
+export enum FacetLayout {
+  CHECKBOX = 'CHECKBOX',
+  NUMBER = 'NUMBER',
+  TAB = 'TAB',
+}
+
 export const RESULTS_PAGE_SIZE = 20
