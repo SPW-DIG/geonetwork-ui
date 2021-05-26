@@ -1,6 +1,7 @@
 const { defaults } = require('jest-config')
 
 module.exports = {
+  testRegex: 'disabled',
   collectCoverage: true,
   collectCoverageFrom: [
     'apps/datafeeder/src/**/*.ts',
