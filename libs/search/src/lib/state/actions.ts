@@ -202,7 +202,8 @@ export class SetIncludeOnAggregation extends AbstractAction implements Action {
 
 export class UpdateRequestAggregationTerm
   extends AbstractAction
-  implements Action {
+  implements Action
+{
   readonly type = UPDATE_REQUEST_AGGREGATION_TERM
   constructor(
     public key: string,
