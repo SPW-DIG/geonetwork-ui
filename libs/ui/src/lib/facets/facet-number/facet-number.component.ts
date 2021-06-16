@@ -12,7 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import { AggregationsTypesEnum } from '@lib/common'
+import { AggregationsMatchPolicy, AggregationsTypesEnum } from '@lib/common'
 import { fromEvent, Subscription } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 import {
@@ -46,6 +46,7 @@ export class FacetNumberComponent
   title: string
   hasItems: boolean
   hasIcons: boolean
+  selectedItems: ModelItem[]
   private subscription = new Subscription()
 
   constructor() {}
@@ -54,6 +55,7 @@ export class FacetNumberComponent
     this.hasItems = this.countItems() > 0
     this.hasIcons = this.icons && Object.keys(this.icons).length > 0
     this.title = this.model.key
+    this.selectedItems = []
   }
 
   ngAfterViewInit(): void {
@@ -83,13 +85,21 @@ export class FacetNumberComponent
   }
 
   isItemSelected(item: ModelItem) {
-    return this.selectedPaths
+    const selected = this.selectedPaths
       .map((path) => JSON.stringify(path))
       .includes(JSON.stringify(item.path))
+    if (selected) {
+      this.selectedItems.push(item)
+    }
+    return selected
   }
 
   emitItemChange(item: ModelItem): void {
-    const eventOutput = { item, block: this.model }
+    const eventOutput: FacetSelectEvent = { item, block: this.model }
+    if (this.model.matchPolicy === AggregationsMatchPolicy.MATCH_ONE) {
+      eventOutput.removedItem = this.selectedItems[0]
+      this.selectedItems[0] = item
+    }
     this.itemChange.emit(eventOutput)
   }
 

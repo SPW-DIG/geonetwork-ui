@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { EsRequestAggTerm, SearchFilters } from '@lib/common'
+import {
+  AggregationsMatchPolicy,
+  EsRequestAggTerm,
+  SearchFilters,
+} from '@lib/common'
 import { FacetSelectEvent, ModelBlock } from '@lib/ui'
 import { combineLatest, Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
@@ -29,6 +33,8 @@ export class FacetsContainerComponent implements OnInit {
 
   selectedPaths$: Observable<string[][]>
   models$: Observable<ModelBlock[]>
+  matchPolicy: AggregationsMatchPolicy = AggregationsMatchPolicy.MATCH_ALL
+  onFirstRunModel: ModelBlock[]
 
   constructor(
     private facets: FacetsService,
@@ -48,8 +54,19 @@ export class FacetsContainerComponent implements OnInit {
         const model = this.facets.createFacetModel(
           configAggregations,
           resultsAggregations,
-          false
+          false,
+          undefined,
+          this.matchPolicy
         )
+        if (
+          this.matchPolicy === AggregationsMatchPolicy.MATCH_ANY ||
+          this.matchPolicy === AggregationsMatchPolicy.MATCH_ONE
+        ) {
+          if (!this.onFirstRunModel && model && model.length > 0) {
+            this.onFirstRunModel = model
+          }
+          return this.onFirstRunModel
+        }
         return model
       })
     )
@@ -62,11 +79,23 @@ export class FacetsContainerComponent implements OnInit {
   }
 
   private updateFilters(filters: SearchFilters, facetEvent: FacetSelectEvent) {
-    const { item, block } = facetEvent
+    const { item, removedItem, block } = facetEvent
     const { path } = item
     const pathValue = this.facets.computeItemPathValue(block, item)
-    const newFilters = this.facets.computeNewFiltersFromState(
-      filters,
+    const removedPathValue =
+      removedItem && this.facets.computeItemPathValue(block, removedItem)
+
+    let newFilters
+    if (removedPathValue) {
+      newFilters = this.facets.computeNewFiltersFromState(
+        filters,
+        removedItem.path,
+        null
+      )
+    }
+
+    newFilters = this.facets.computeNewFiltersFromState(
+      newFilters || filters,
       path,
       pathValue
     )

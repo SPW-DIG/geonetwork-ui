@@ -26,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { TextAreaComponent } from './text-area/text-area.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     // TagInputModule,
     // MyDatePickerModule,
     CommonModule,
+    MatTooltipModule,
   ],
   exports: [
     DropdownSelectorComponent,

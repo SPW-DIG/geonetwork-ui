@@ -1,53 +1,71 @@
-<div [hidden]="record$ | async">
-  <mat-toolbar color="primary" class="fixed z-20">
-    <div class="w-1/4">
-      <catalog-site-title></catalog-site-title>
-    </div>
+<mat-drawer-container>
+  <mat-drawer #drawer
+              mode="hover">
+    <catalog-site-title></catalog-site-title>
 
-    <div class="flex-grow flex pr-8">
-      <search-fuzzy-search class="flex-grow"></search-fuzzy-search>
-      <search-sort-by></search-sort-by>
-      <search-results-layout></search-results-layout>
-    </div>
+    <search-facet-number
+      class="pt-24 flex h-full w-full"
+      field="cl_spatialRepresentationType.key"
+      icons='{"vector": "class:multiline_chart", "grid": "class:grid_on", "textTable": "class:table_rows", "video": "class:video_camera_back"}'
+    ></search-facet-number>
+  </mat-drawer>
 
-    <button
-      mat-icon-button
-      class="float-right"
-      [matMenuTriggerFor]="menu"
-      aria-label="theme.menu.selectOne"
-    >
-      <mat-icon>format_color_fill</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="updateTheme()">
-        <mat-icon></mat-icon>
-        <span>theme.updateThemeVariables</span>
+  <div [hidden]="record$ | async">
+    <mat-toolbar color="primary" class="fixed z-20">
+      <div class="pr-4">
+        <button type="button"
+                mat-button
+                (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+
+      <div class="flex-grow flex pr-8">
+        <search-fuzzy-search class="flex-grow"></search-fuzzy-search>
+        <search-sort-by></search-sort-by>
+        <search-results-layout></search-results-layout>
+      </div>
+
+      <button
+        mat-icon-button
+        class="float-right"
+        [matMenuTriggerFor]="menu"
+        aria-label="theme.menu.selectOne"
+      >
+        <mat-icon>format_color_fill</mat-icon>
       </button>
-      <button mat-menu-item (click)="setTheme('light')">
-        <mat-icon></mat-icon>
-        <span>theme.select.light</span>
-      </button>
-      <button mat-menu-item (click)="setTheme('dark')">
-        <mat-icon></mat-icon>
-        <span>theme.select.dark</span>
-      </button>
-    </mat-menu>
-  </mat-toolbar>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="updateTheme()">
+          <mat-icon></mat-icon>
+          <span>theme.updateThemeVariables</span>
+        </button>
+        <button mat-menu-item (click)="setTheme('light')">
+          <mat-icon></mat-icon>
+          <span>theme.select.light</span>
+        </button>
+        <button mat-menu-item (click)="setTheme('dark')">
+          <mat-icon></mat-icon>
+          <span>theme.select.dark</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
 
-  <search-facet-number
-    class="pt-24 flex h-full w-full"
-    field="cl_spatialRepresentationType.key"
-    icons='{"vector": "class:multiline_chart", "grid": "class:grid_on", "textTable": "class:table_rows", "video": "class:video_camera_back"}'
-  ></search-facet-number>
+    <search-facet-number
+      class="pt-24 flex h-full w-full"
+      field="cl_spatialRepresentationType.key"
+      icons='{"vector": "class:multiline_chart", "grid": "class:grid_on", "textTable": "class:table_rows", "video": "class:video_camera_back"}'
+    ></search-facet-number>
 
-  <div class="flex w-full">
-    <search-facets-container class="w-1/4 h-full"></search-facets-container>
-    <div class="w-3/4">
-      <search-results-hits></search-results-hits>
-      <search-results-list-container></search-results-list-container>
+    <div class="flex w-full">
+      <search-facets-container class="w-1/4 h-full"></search-facets-container>
+      <div class="w-3/4">
+        <search-results-hits></search-results-hits>
+        <search-results-list-container></search-results-list-container>
+      </div>
     </div>
   </div>
-</div>
 
-<data-record-view *ngIf="record$ | async" class="flex w-full">
-</data-record-view>
+  <data-record-view *ngIf="record$ | async" class="flex w-full">
+  </data-record-view>
+
+</mat-drawer-container>

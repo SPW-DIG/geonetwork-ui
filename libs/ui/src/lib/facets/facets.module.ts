@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
 import { FacetNumberComponent } from './facet-number/facet-number.component'
 import { MatIconModule } from '@angular/material/icon'
 import { FacetIconComponent } from './facet-icon/facet-icon.component'
+import { MatRippleModule } from '@angular/material/core'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FacetIconComponent } from './facet-icon/facet-icon.component'
     MatCheckboxModule,
     GnCommonModule,
     MatIconModule,
+    MatRippleModule,
   ],
   exports: [FacetListComponent, FacetBlockComponent],
 })

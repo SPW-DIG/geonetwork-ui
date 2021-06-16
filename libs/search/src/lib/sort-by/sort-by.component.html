@@ -1,4 +1,6 @@
-<mat-form-field class="w-16" *ngIf="choices.length > 1">
+<mat-form-field floatLabel="never"
+                class="w-16"
+                *ngIf="choices.length > 1">
   <mat-label><mat-icon>sort</mat-icon></mat-label>
   <mat-select
     title="{{ 'results.sortBy.selectOne' | translate }}"
@@ -6,11 +8,13 @@
     [(value)]="currentSortBy"
     (selectionChange)="changeSortBy($event)"
   >
-    <mat-select-trigger *ngIf="currentSortBy">
-      <mat-icon>{{ currentSortBy.icon }}</mat-icon>
+    <mat-select-trigger *ngIf="currentSortBy"
+                        [title]="currentSortBy.label | translate">
+      <mat-icon class="h-16 text-sm scale-50">{{ currentSortBy.icon }}</mat-icon>
+<!--      {{currentSortBy.label}}-->
     </mat-select-trigger>
     <mat-option *ngFor="let l of choices" [value]="l">
-      <mat-icon>{{ l.icon }}</mat-icon>
+<!--      <mat-icon>{{ l.icon }}</mat-icon>-->
       {{ l.label }}
     </mat-option>
   </mat-select>

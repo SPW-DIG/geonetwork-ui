@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MainSearchComponent } from './main-search/main-search.component'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatMenuModule } from '@angular/material/menu'
+import { MatSidenavModule } from '@angular/material/sidenav'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -43,6 +44,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
+    MatSidenavModule,
   ],
   providers: [
     {

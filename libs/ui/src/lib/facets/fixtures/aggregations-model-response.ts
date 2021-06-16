@@ -1,4 +1,4 @@
-import { AggregationsTypesEnum } from '@lib/common'
+import { AggregationsMatchPolicy, AggregationsTypesEnum } from '@lib/common'
 import { ModelBlock, ModelItem } from '@lib/ui'
 
 export const BLOCK_MODEL_FIXTURE: ModelBlock = {
@@ -30,6 +30,7 @@ export const BLOCK_MODEL_FIXTURE: ModelBlock = {
   type: AggregationsTypesEnum.TERMS,
   size: 21,
   more: true,
+  matchPolicy: AggregationsMatchPolicy.MATCH_ALL,
   includeFilter: true,
   excludeFilter: false,
 }
@@ -40,6 +41,7 @@ export const EMPTY_BLOCK_MODEL_FIXTURE: ModelBlock = {
   type: AggregationsTypesEnum.TERMS,
   size: 21,
   more: true,
+  matchPolicy: AggregationsMatchPolicy.MATCH_ALL,
   includeFilter: false,
   excludeFilter: false,
 }

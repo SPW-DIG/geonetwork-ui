@@ -17,18 +17,20 @@
     [title]="record.abstract"
     [target]="linkTarget"
   >-->
-  <div class="flex flex-col min-h-full">
+  <div class="flex flex-col min-h-full"
+       matTooltip="{{record.abstract}}"
+       matTooltipPosition="right">
     <ui-record-thumbnail
       class="lg:h-48 md:h-36 border-b border-primary-200 bg-gray-100"
       [thumbnailUrl]="record.thumbnailUrl"
     ></ui-record-thumbnail>
 
     <div class="flex-grow p-4">
-      <h1 class="text-lg font-medium mb-3 clamp-2">
+      <h1 class="text-lg font-medium mb-3 clamp-4">
         {{ record.title }}
       </h1>
       <p class="leading-relaxed md:h-20 text-main-700 clamp-3">
-        {{ record.abstract }}
+
       </p>
     </div>
   </div>

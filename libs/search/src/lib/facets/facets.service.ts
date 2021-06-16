@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import {
+  AggregationsMatchPolicy,
   AggregationsTypesEnum,
   LogService,
   parse,
@@ -18,7 +19,8 @@ export class FacetsService {
     requestAggregations,
     responseAggregations,
     isNested: boolean,
-    path: string[] = []
+    path: string[] = [],
+    matchPolicy: AggregationsMatchPolicy
   ) {
     if (requestAggregations === undefined) {
       return
@@ -39,6 +41,7 @@ export class FacetsService {
         let blockModel: any = {
           key,
           items: [],
+          matchPolicy,
           path: [...path, responseAgg.meta?.field || key],
           meta: responseAgg.meta,
         }
@@ -188,7 +191,7 @@ export class FacetsService {
     const clone = JSON.parse(JSON.stringify(filters))
     const getter = parse(path.join(PARSE_DELIMITER))
     if (value === null) {
-      this.removePathFromFilters_(clone, path)
+      this.removePathFromFilters(clone, path)
     } else {
       const setter = getter.assign
       setter(clone, value)
@@ -203,7 +206,7 @@ export class FacetsService {
    * @param filters state
    * @param path to remove from state
    */
-  private removePathFromFilters_(filters: SearchFilters, path: FacetPath) {
+  removePathFromFilters(filters: SearchFilters, path: FacetPath) {
     const head = path[0]
     const tail = path.slice(1)
     for (const prop of Object.keys(filters)) {
@@ -212,7 +215,7 @@ export class FacetsService {
           delete filters[prop]
         } else {
           if ('object' === typeof filters[prop]) {
-            this.removePathFromFilters_(filters[prop], tail)
+            this.removePathFromFilters(filters[prop], tail)
             if (0 === Object.keys(filters[prop]).length) {
               delete filters[prop]
             }

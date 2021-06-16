@@ -3,6 +3,7 @@
     matInput
     placeholder="Search"
     #searchText
+    autofocus
     [formControl]="control"
     [matAutocomplete]="auto"
     (keyup.enter)="triggerSearch($event.target.value)"
