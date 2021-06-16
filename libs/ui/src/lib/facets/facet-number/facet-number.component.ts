@@ -32,6 +32,7 @@ export class FacetNumberComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input() expanded = true
+  @Input() isColumnMode = true
   @Input() filter: string
   @Input() icons: any = {}
   @Input() model: ModelBlock
@@ -46,12 +47,14 @@ export class FacetNumberComponent
   title: string
   hasItems: boolean
   hasIcons: boolean
+
   selectedItems: ModelItem[]
   private subscription = new Subscription()
 
   constructor() {}
 
   ngOnInit(): void {
+    console.log('inint')
     this.hasItems = this.countItems() > 0
     this.hasIcons = this.icons && Object.keys(this.icons).length > 0
     this.title = this.model.key

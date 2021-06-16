@@ -17,7 +17,13 @@ export class FacetIconComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const iconConfig = this.icon.split(/(class|img):/)
+    const config = this.parseIconConfig(this.icon)
+    this.type = config.type
+    this.ref = config.ref
+  }
+
+  parseIconConfig(icon): { type: FacetIconTypes; ref: string } {
+    const iconConfig = icon.split(/(class|img):/)
 
     if (iconConfig.length !== 3) {
       console.error(
@@ -26,8 +32,10 @@ export class FacetIconComponent implements OnInit {
       return
     }
 
-    this.type =
-      iconConfig[1] === 'class' ? FacetIconTypes.CLASS : FacetIconTypes.IMG
-    this.ref = iconConfig[2]
+    return {
+      type:
+        iconConfig[1] === 'class' ? FacetIconTypes.CLASS : FacetIconTypes.IMG,
+      ref: iconConfig[2],
+    }
   }
 }

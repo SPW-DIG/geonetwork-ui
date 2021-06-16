@@ -47,6 +47,7 @@ export enum ResultsListLayout {
 export enum FacetLayout {
   CHECKBOX = 'CHECKBOX',
   NUMBER = 'NUMBER',
+  NUMBER_IN_COLUMN = 'NUMBER_IN_COLUMN',
   TAB = 'TAB',
 }
 

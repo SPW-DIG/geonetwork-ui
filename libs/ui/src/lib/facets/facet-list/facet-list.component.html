@@ -3,23 +3,26 @@
     *ngSwitchCase="layoutEnum.CHECKBOX"
     [ngTemplateOutlet]="default"
   ></ng-container>
-  <ng-container *ngSwitchCase="layoutEnum.NUMBER">
-    <ui-facet-number
-      *ngFor="
-        let model of models | filterObjectByKey: 'key':field;
-        trackBy: trackByIndexKey
-      "
-      [model]="model"
-      [icons]="iconsConfig"
-      [selectedPaths]="getBlockSelectedPaths(model)"
-      (itemChange)="onItemChange($event)"
-      (filterChange)="onFilterChange(model.key, $event)"
-      (more)="onMore(model.key)"
-    ></ui-facet-number>
-  </ng-container>
+  <ng-container *ngSwitchCase="layoutEnum.NUMBER" [ngTemplateOutlet]="numbers"></ng-container>
+  <ng-container *ngSwitchCase="layoutEnum.NUMBER_IN_COLUMN" [ngTemplateOutlet]="numbers"></ng-container>
   <ng-container *ngSwitchDefault [ngTemplateOutlet]="default"></ng-container>
 </ng-container>
 
+<ng-template #numbers>
+  <ui-facet-number
+    *ngFor="
+        let model of models | filterObjectByKey: 'key':field;
+        trackBy: trackByIndexKey
+      "
+    [model]="model"
+    [isColumnMode]="layout === layoutEnum.NUMBER_IN_COLUMN"
+    [icons]="iconsConfig"
+    [selectedPaths]="getBlockSelectedPaths(model)"
+    (itemChange)="onItemChange($event)"
+    (filterChange)="onFilterChange(model.key, $event)"
+    (more)="onMore(model.key)"
+  ></ui-facet-number>
+</ng-template>
 <ng-template #default>
   <ui-facet-block
     *ngFor="

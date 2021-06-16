@@ -5,8 +5,12 @@
 
     <search-facet-number
       class="pt-24 flex h-full w-full"
-      field="cl_spatialRepresentationType.key"
-      icons='{"vector": "class:multiline_chart", "grid": "class:grid_on", "textTable": "class:table_rows", "video": "class:video_camera_back"}'
+      field="cl_hierarchyLevel.key"
+      [isColumnMode]="true"
+      icons='{"background": true, "items": {
+        "dataset": "https://www.eea.europa.eu/themes/climate-change-adaptation/theme_image/image_preview",
+        "series": "https://www.eea.europa.eu/themes/waste/theme_image/image_preview",
+        "service": "https://www.eea.europa.eu/themes/landuse/theme_image/image_preview"}}'
     ></search-facet-number>
   </mat-drawer>
 
@@ -53,7 +57,8 @@
     <search-facet-number
       class="pt-24 flex h-full w-full"
       field="cl_spatialRepresentationType.key"
-      icons='{"vector": "class:multiline_chart", "grid": "class:grid_on", "textTable": "class:table_rows", "video": "class:video_camera_back"}'
+
+      icons='{"background": false, "items": {"vector": "class:multiline_chart", "grid": "class:grid_on", "textTable": "class:table_rows", "video": "class:video_camera_back"}}'
     ></search-facet-number>
 
     <div class="flex w-full">
