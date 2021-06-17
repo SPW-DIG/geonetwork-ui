@@ -54,7 +54,6 @@ export class FacetNumberComponent
   constructor() {}
 
   ngOnInit(): void {
-    console.log('inint')
     this.hasItems = this.countItems() > 0
     this.hasIcons = this.icons && Object.keys(this.icons).length > 0
     this.title = this.model.key
