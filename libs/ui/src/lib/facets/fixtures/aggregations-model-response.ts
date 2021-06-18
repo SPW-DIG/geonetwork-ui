@@ -1,4 +1,8 @@
-import { AggregationsMatchPolicy, AggregationsTypesEnum } from '@lib/common'
+import {
+  AggregationsMatchPolicy,
+  AggregationsTypesEnum,
+  AggregationsUpdatePolicy,
+} from '@lib/common'
 import { ModelBlock, ModelItem } from '@lib/ui'
 
 export const BLOCK_MODEL_FIXTURE: ModelBlock = {
@@ -31,6 +35,7 @@ export const BLOCK_MODEL_FIXTURE: ModelBlock = {
   size: 21,
   more: true,
   matchPolicy: AggregationsMatchPolicy.MATCH_ALL,
+  updatePolicy: AggregationsUpdatePolicy.ALWAYS,
   includeFilter: true,
   excludeFilter: false,
 }
@@ -42,6 +47,7 @@ export const EMPTY_BLOCK_MODEL_FIXTURE: ModelBlock = {
   size: 21,
   more: true,
   matchPolicy: AggregationsMatchPolicy.MATCH_ALL,
+  updatePolicy: AggregationsUpdatePolicy.ALWAYS,
   includeFilter: false,
   excludeFilter: false,
 }

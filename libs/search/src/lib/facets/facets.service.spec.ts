@@ -1,4 +1,8 @@
-import { AggregationsMatchPolicy, AggregationsTypesEnum } from '@lib/common'
+import {
+  AggregationsMatchPolicy,
+  AggregationsTypesEnum,
+  AggregationsUpdatePolicy,
+} from '@lib/common'
 import { ModelBlock, ModelItem } from '@lib/ui'
 import {
   ES_FIXTURE_AGGS_REQUEST,
@@ -124,6 +128,7 @@ describe('FacetsService', () => {
         items: [],
         key: '',
         matchPolicy: AggregationsMatchPolicy.MATCH_ALL,
+        updatePolicy: AggregationsUpdatePolicy.ALWAYS,
         more: false,
         size: 0,
         type: AggregationsTypesEnum.TERMS,

@@ -1,4 +1,8 @@
-import { AggregationsMatchPolicy, AggregationsTypesEnum } from '@lib/common'
+import {
+  AggregationsMatchPolicy,
+  AggregationsTypesEnum,
+  AggregationsUpdatePolicy,
+} from '@lib/common'
 
 export type FacetPath = string[]
 
@@ -20,6 +24,7 @@ export interface ModelBlock extends HasPath {
   items: ModelItem[]
   type: AggregationsTypesEnum
   matchPolicy: AggregationsMatchPolicy
+  updatePolicy: AggregationsUpdatePolicy
   size: number
   more: boolean
   includeFilter: boolean

@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, Optional } from '@angular/core'
 import {
   AggregationsMatchPolicy,
+  AggregationsUpdatePolicy,
   EsRequestAggTerm,
+  FacetIconConfig,
+  FacetLayout,
   SearchFilters,
 } from '@lib/common'
 import { FacetSelectEvent, ModelBlock } from '@lib/ui'
@@ -29,11 +32,14 @@ marker('facets.block.title.th_regions_tree.default')
   styleUrls: ['./facets-container.component.css'],
 })
 export class FacetsContainerComponent implements OnInit {
-  @Input() field
+  @Input() field?
+  @Input() layout = FacetLayout.CHECKBOX
+  @Input() updatePolicy = AggregationsUpdatePolicy.ONMAJORSEARCH
+  @Input() matchPolicy = AggregationsMatchPolicy.MATCH_ALL
+  @Input() icons?: FacetIconConfig
 
   selectedPaths$: Observable<string[][]>
   models$: Observable<ModelBlock[]>
-  matchPolicy: AggregationsMatchPolicy = AggregationsMatchPolicy.MATCH_ALL
   onFirstRunModel: ModelBlock[]
 
   constructor(
@@ -42,6 +48,10 @@ export class FacetsContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.updatePolicy = AggregationsUpdatePolicy[this.updatePolicy]
+    this.matchPolicy = AggregationsMatchPolicy[this.matchPolicy]
+    this.layout = FacetLayout[this.layout]
+
     this.selectedPaths$ = this.searchFacade.searchFilters$.pipe(
       map((filters) => this.facets.findSelectedPaths(filters))
     )
